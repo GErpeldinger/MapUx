@@ -1,0 +1,9 @@
+###> Project ###
+/vendor/
+composer.lock
+###< Project ###
+
+###> Others ###
+/.idea/
+.DS_Store
+###< Others ###
