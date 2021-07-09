@@ -1,0 +1,31 @@
+{
+    "name": "gerpeldinger/mapux",
+    "description": "MapUx is a bundle for symfony, its goal is to help you to add maps easily in your project.",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Francois Vaillant",
+            "email": "frvaillant@gmail.com"
+        },
+        {
+            "name": "Guillaume Erpeldinger",
+            "email": "erpeldinger.g@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "symfony/config": "^4.4.17|^5.0",
+        "symfony/dependency-injection": "^4.4.17|^5.0",
+        "symfony/http-kernel": "^4.4.17|^5.0"
+    },
+    "require-dev": {
+        "symfony/framework-bundle": "^4.4.17|^5.0",
+        "symfony/twig-bundle": "^4.4.17|^5.0",
+        "symfony/var-dumper": "^4.4.17|^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MapUx\\": ""
+        }
+    }
+}
