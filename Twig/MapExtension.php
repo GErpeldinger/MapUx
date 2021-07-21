@@ -2,7 +2,7 @@
 
 namespace MapUx\Twig;
 
-use MapUx\Model\Map;
+use MapUx\Model\MapInterface;
 use Twig\Environment;
 use Twig\Error\RuntimeError;
 use Twig\Extension\AbstractExtension;
@@ -26,19 +26,20 @@ class MapExtension extends AbstractExtension
 
     /**
      * @param Environment $env
-     * @param Map $map
+     * @param MapInterface $map
      *
      * @return string
      *
      * @throws RuntimeError
      */
-    public function renderMap(Environment $env, Map $map): string
+    public function renderMap(Environment $env, MapInterface $map): string
     {
         $view = twig_escape_filter($env, json_encode($map->createView()), 'html_attr');
 
         $html = '
             <div
-                data-controller="mapux--leaflet--map"
+                class="mapux-map"
+                data-controller="' . $map->getController() . '"
                 data-view="' . $view . '"
              ></div>
         ';

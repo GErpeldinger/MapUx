@@ -1,20 +1,32 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MapUx\Model;
 
-class Map
+class OpenLayerMap implements MapInterface
 {
-    /** @var float */
+    /**
+     * @var string
+     */
+    private $controller = MapInterface::OPEN_LAYER_CONTROLLER;
+
+    /**
+     * @var float
+     */
     private $latitude;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $longitude;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $zoom;
 
+    /**
+     * @inheritDoc
+     */
     public function __construct(float $latitude, float $longitude, int $zoom)
     {
         $this->latitude = $latitude;
@@ -22,6 +34,25 @@ class Map
         $this->zoom = $zoom;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getController(): string
+    {
+        return $this->controller;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setController(string $controller): void
+    {
+        $this->controller = $controller;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function createView(): array
     {
         return [
@@ -31,18 +62,18 @@ class Map
     }
 
     /**
-     * @return float[]
+     * @inheritDoc
      */
     public function getCenter(): array
     {
         return [
-            $this->getLatitude(),
-            $this->getLongitude()
+            $this->getLongitude(),
+            $this->getLatitude()
         ];
     }
 
     /**
-     * @return float
+     * @inheritDoc
      */
     public function getLatitude(): float
     {
@@ -50,7 +81,7 @@ class Map
     }
 
     /**
-     * @param float $latitude
+     * @inheritDoc
      */
     public function setLatitude(float $latitude): void
     {
@@ -58,7 +89,7 @@ class Map
     }
 
     /**
-     * @return float
+     * @inheritDoc
      */
     public function getLongitude(): float
     {
@@ -66,7 +97,7 @@ class Map
     }
 
     /**
-     * @param float $longitude
+     * @inheritDoc
      */
     public function setLongitude(float $longitude): void
     {
@@ -74,7 +105,7 @@ class Map
     }
 
     /**
-     * @return int
+     * @inheritDoc
      */
     public function getZoom(): int
     {
@@ -82,7 +113,7 @@ class Map
     }
 
     /**
-     * @param int $zoom
+     * @inheritDoc
      */
     public function setZoom(int $zoom): void
     {

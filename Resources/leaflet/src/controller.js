@@ -1,7 +1,8 @@
 import { Controller } from 'stimulus';
 import * as L from 'leaflet';
 
-export default class extends Controller {
+export default class extends Controller
+{
     connect() {
         const view = JSON.parse(this.element.dataset.view)
 

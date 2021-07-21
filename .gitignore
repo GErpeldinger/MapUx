@@ -1,8 +1,8 @@
 ###> Project ###
 /vendor/
 composer.lock
-/Resources/leaflet/assets/node_modules/
-/Resources/leaflet/assets/yarn.lock
+/Resources/*/node_modules/
+/Resources/*/yarn.lock
 ###< Project ###
 
 ###> Others ###
