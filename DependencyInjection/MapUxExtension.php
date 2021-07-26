@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace MapUx\DependencyInjection;
 
-use MapUx\Builder\LeafletMapBuilder;
+use MapUx\Builder\Leaflet\MapBuilder;
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Builder\OpenLayerMapBuilder;
 use MapUx\Twig\MapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -21,10 +20,12 @@ class MapUxExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $container
-            ->register('mapux-leaflet.builder', LeafletMapBuilder::class)
-        ;
+            ->setDefinition('mapux.builder', new Definition(MapBuilder::class))
+            ->setPublic(false);
 
-        $container->setAliases();
+        $container
+            ->setAlias(MapBuilderInterface::class, 'mapux.builder')
+            ->setPublic(false);
 
         if (class_exists(Environment::class)) {
             $container

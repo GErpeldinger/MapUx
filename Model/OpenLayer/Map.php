@@ -2,20 +2,30 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model;
+namespace MapUx\Model\OpenLayer;
 
-class LeafletMap implements MapInterface
+use MapUx\Model\MapInterface;
+
+class Map implements MapInterface
 {
-    /** @var string */
-    private $controller = MapInterface::LEAFLET_CONTROLLER;
+    /**
+     * @var string
+     */
+    private $controller = MapInterface::OPEN_LAYER_CONTROLLER;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $latitude;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $longitude;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $zoom;
 
     /**
@@ -23,9 +33,9 @@ class LeafletMap implements MapInterface
      */
     public function __construct(float $latitude, float $longitude, int $zoom)
     {
-        $this->latitude  = $latitude;
+        $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->zoom      = $zoom;
+        $this->zoom = $zoom;
     }
 
     /**
@@ -51,7 +61,7 @@ class LeafletMap implements MapInterface
     {
         return [
             $this->getCenter(),
-            $this->getZoom(),
+            $this->getZoom()
         ];
     }
 
@@ -61,8 +71,8 @@ class LeafletMap implements MapInterface
     public function getCenter(): array
     {
         return [
-            'lat' => $this->getLatitude(),
-            'lon' => $this->getLongitude(),
+            $this->getLongitude(),
+            $this->getLatitude()
         ];
     }
 

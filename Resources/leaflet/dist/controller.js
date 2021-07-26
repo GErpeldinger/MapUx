@@ -11,6 +11,8 @@ var _stimulus = require("stimulus");
 
 var L = _interopRequireWildcard(require("leaflet"));
 
+var _leafletSrc = require("leaflet/dist/leaflet-src.esm");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -63,6 +65,7 @@ var _default = /*#__PURE__*/function (_Controller) {
     value: function connect() {
       var _L$map;
 
+      this.redefineIcons();
       var view = JSON.parse(this.element.dataset.view);
 
       var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
@@ -71,6 +74,17 @@ var _default = /*#__PURE__*/function (_Controller) {
         maxZoom: 20,
         attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
+      L.marker([44.922966, -0.460516]).addTo(map);
+    }
+  }, {
+    key: "redefineIcons",
+    value: function redefineIcons() {
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconUrl: require('leaflet/dist/images/marker-icon.png'),
+        shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+      });
     }
   }]);
 
