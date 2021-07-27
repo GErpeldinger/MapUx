@@ -9,6 +9,11 @@ use MapUx\Model\MapInterface;
 class Map implements MapInterface
 {
     /**
+     * World Geodetic System 1984, used in GPS
+     */
+    public const PROJECTION_WGS84 = 'EPSG:4326';
+
+    /**
      * @var string
      */
     private $controller = MapInterface::OPEN_LAYER_CONTROLLER;
@@ -27,6 +32,11 @@ class Map implements MapInterface
      * @var int
      */
     private $zoom;
+
+    /**
+     * @var string
+     */
+    private $projection = self::PROJECTION_WGS84;
 
     /**
      * @inheritDoc
@@ -60,8 +70,9 @@ class Map implements MapInterface
     public function createView(): array
     {
         return [
-            $this->getCenter(),
-            $this->getZoom()
+            'center'     => $this->getCenter(),
+            'zoom'       => $this->getZoom(),
+            'projection' => $this->getProjection()
         ];
     }
 
@@ -122,5 +133,21 @@ class Map implements MapInterface
     public function setZoom(int $zoom): void
     {
         $this->zoom = $zoom;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjection(): string
+    {
+        return $this->projection;
+    }
+
+    /**
+     * @param string $projection
+     */
+    public function setProjection(string $projection): void
+    {
+        $this->projection = $projection;
     }
 }

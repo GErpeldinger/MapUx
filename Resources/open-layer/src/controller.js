@@ -4,8 +4,7 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 
-export default class extends Controller
-{
+export default class extends Controller {
     connect() {
         const view = new View(
             JSON.parse(this.element.dataset.view)
@@ -22,10 +21,7 @@ export default class extends Controller
         new Map({
             target: this.element,
             layers: [tileLayer],
-            view: new View({
-                center: [-0.460516, 44.922966],
-                zoom: 17
-            })
+            view: view
         })
     }
 }

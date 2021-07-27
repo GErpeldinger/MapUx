@@ -63,10 +63,7 @@ var _default = /*#__PURE__*/function (_Controller) {
       new _Map["default"]({
         target: this.element,
         layers: [tileLayer],
-        view: new _View["default"]({
-          center: [-0.460516, 44.922966],
-          zoom: 17
-        })
+        view: view
       });
     }
   }]);

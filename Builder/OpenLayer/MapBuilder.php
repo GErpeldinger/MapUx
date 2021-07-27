@@ -7,7 +7,7 @@ namespace MapUx\Builder\OpenLayer;
 use MapUx\Builder\MapBuilderInterface;
 use MapUx\Model\OpenLayer\Map;
 
-class OpenLayerMapBuilder implements MapBuilderInterface
+class MapBuilder implements MapBuilderInterface
 {
     /**
      * @inheritDoc
