@@ -11,6 +11,7 @@ namespace MapUx\Model;
  * @experimental
  *
  * @property string $controller
+ * @property string $background
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
@@ -99,4 +100,20 @@ interface MapInterface
      * @param int $zoom
      */
     public function setZoom(int $zoom): void;
+
+
+    /**
+     * Get the background tile
+     *
+     * @return string
+     */
+    public function getBackground(): string;
+
+    /**
+     * Set the background tile url
+     *
+     * @param string $background
+     */
+    public function setBackground(string $background): void;
+
 }

@@ -57,7 +57,7 @@ var _default = /*#__PURE__*/function (_Controller) {
       console.log(view);
       var tileLayer = new _Tile["default"]({
         source: new _XYZ["default"]({
-          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          url: this.element.dataset.background
         })
       });
       new _Map["default"]({

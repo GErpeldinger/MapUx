@@ -38,6 +38,9 @@ class Map implements MapInterface
      */
     private $projection = self::PROJECTION_WGS84;
 
+    /** @var string */
+    private $background = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
     /**
      * @inheritDoc
      */
@@ -149,5 +152,15 @@ class Map implements MapInterface
     public function setProjection(string $projection): void
     {
         $this->projection = $projection;
+    }
+
+    public function getBackground(): string
+    {
+        return $this->background;
+    }
+
+    public function setBackground(string $background): void
+    {
+        $this->background = $background;
     }
 }

@@ -20,6 +20,9 @@ class Map implements MapInterface
     /** @var int */
     private $zoom;
 
+    /** @var string */
+    private $background = 'https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
+
     /**
      * @inheritDoc
      */
@@ -114,5 +117,15 @@ class Map implements MapInterface
     public function setZoom(int $zoom): void
     {
         $this->zoom = $zoom;
+    }
+
+    public function getBackground(): string
+    {
+       return $this->background;
+    }
+
+    public function setBackground(string $background): void
+    {
+        $this->background = $background;
     }
 }

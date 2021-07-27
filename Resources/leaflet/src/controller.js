@@ -10,7 +10,7 @@ export default class extends Controller
 
         const map = L.map(this.element).setView(...view)
 
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        L.tileLayer(this.element.dataset.background, {
             maxZoom: 20,
             attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map)

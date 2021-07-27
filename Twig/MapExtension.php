@@ -39,7 +39,8 @@ class MapExtension extends AbstractExtension
         $html = '
             <div
                 class="mapux-map"
-                data-controller="' . $map->getController() . '"
+                data-controller="' . $map->getController() . '" 
+                data-background="' . $map->getBackground() . '"
                 data-view="' . $view . '"
              ></div>
         ';

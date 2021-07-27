@@ -68,7 +68,7 @@ var _default = /*#__PURE__*/function (_Controller) {
 
       var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
 
-      L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+      L.tileLayer(this.element.dataset.background, {
         maxZoom: 20,
         attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);

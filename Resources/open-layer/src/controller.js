@@ -14,7 +14,7 @@ export default class extends Controller {
 
         const tileLayer = new TileLayer({
             source: new XYZ({
-                url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                url: this.element.dataset.background
             })
         })
 
