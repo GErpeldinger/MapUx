@@ -94,9 +94,11 @@ class Background implements BackgroundInterface
     }
 
     /**
-     * @inheritDoc
+     * Set the attributions
+     *
+     * @param string|null $attribution
      */
-    public function setAttribution(?string $attribution): void
+    public function setAttribution($attribution): void
     {
         $this->attribution = $attribution;
     }

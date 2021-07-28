@@ -9,7 +9,7 @@ namespace MapUx\Model;
  * 
  * @property string $url
  * @property int $maxZoom
- * @property ?string $attribution
+ * @property string|array|null $attribution
  */
 interface BackgroundInterface
 {
@@ -57,16 +57,16 @@ interface BackgroundInterface
     public function setMaxZoom(int $maxZoom): void;
 
     /**
-     * Set the attribution
+     * Get the attribution(s)
      *
-     * @return string
+     * @return string|array|null
      */
-    public function getAttribution(): ?string;
+    public function getAttribution();
 
     /**
-     * Set the attribution
+     * Set the attribution(s)
      *
-     * @param string $attribution
+     * @param string|array|null $attribution
      */
-    public function setAttribution(string $attribution): void;
+    public function setAttribution($attribution): void;
 }
