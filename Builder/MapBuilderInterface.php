@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MapUx\Builder;
 
+use MapUx\Model\BackgroundInterface;
 use MapUx\Model\MapInterface;
 
 /**
@@ -12,11 +13,14 @@ use MapUx\Model\MapInterface;
 interface MapBuilderInterface
 {
     /**
+     * Create a Map
+     *
+     * @param BackgroundInterface $background
      * @param float $latitude
      * @param float $longitude
      * @param int $zoom
      *
      * @return MapInterface
      */
-    public function createMap(float $latitude, float $longitude, int $zoom);
+    public function createMap($background, float $latitude, float $longitude, int $zoom);
 }

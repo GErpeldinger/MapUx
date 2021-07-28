@@ -8,7 +8,7 @@ namespace MapUx\Model;
  * @experimental
  *
  * @property string $controller
- * @property string $background
+ * @property BackgroundInterface $background
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
@@ -18,11 +18,12 @@ interface MapInterface
     /**
      * Map constructor.
      *
+     * @param BackgroundInterface $background
      * @param float $latitude
      * @param float $longitude
      * @param int $zoom
      */
-    public function __construct(float $latitude, float $longitude, int $zoom);
+    public function __construct($background, float $latitude, float $longitude, int $zoom);
 
     /**
      * Return name of the stimulus controller
@@ -57,16 +58,16 @@ interface MapInterface
     /**
      * Get the background tile
      *
-     * @return string
+     * @return BackgroundInterface
      */
-    public function getBackground(): string;
+    public function getBackground();
 
     /**
-     * Set the background tile url
+     * Set the background tile
      *
-     * @param string $background
+     * @param BackgroundInterface $background
      */
-    public function setBackground(string $background): void;
+    public function setBackground($background): void;
 
     /**
      * Get the latitude
