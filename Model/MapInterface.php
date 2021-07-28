@@ -18,12 +18,11 @@ interface MapInterface
     /**
      * Map constructor.
      *
-     * @param BackgroundInterface $background
      * @param float $latitude
      * @param float $longitude
      * @param int $zoom
      */
-    public function __construct($background, float $latitude, float $longitude, int $zoom);
+    public function __construct(float $latitude, float $longitude, int $zoom);
 
     /**
      * Return name of the stimulus controller
@@ -46,6 +45,13 @@ interface MapInterface
      * @return array eg. [center, zoom]
      */
     public function createView(): array;
+
+    /**
+     * Create the background layer that will be given to the controller
+     *
+     * @return array eg. [url, maxZoom, attribution]
+     */
+    public function createBackground(): array;
 
     /**
      * Get the center of the map
