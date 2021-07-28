@@ -8,7 +8,7 @@ namespace MapUx\Model;
  * @experimental
  *
  * @property string $controller
- * @property BackgroundInterface $background
+ * @property LayerInterface $background
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
@@ -58,14 +58,14 @@ interface MapInterface
     /**
      * Get the background tile
      *
-     * @return BackgroundInterface
+     * @return LayerInterface
      */
     public function getBackground();
 
     /**
      * Set the background tile
      *
-     * @param BackgroundInterface $background
+     * @param LayerInterface $background
      */
     public function setBackground($background): void;
 

@@ -82,9 +82,9 @@ class Map implements MapInterface
     /**
      * Get the background tile
      *
-     * @return Background
+     * @return Layer
      */
-    public function getBackground(): Background
+    public function getBackground(): Layer
     {
         return $this->background;
     }
@@ -92,7 +92,7 @@ class Map implements MapInterface
     /**
      * Set the background tile url
      *
-     * @param Background $background
+     * @param Layer $background
      */
     public function setBackground($background): void
     {
