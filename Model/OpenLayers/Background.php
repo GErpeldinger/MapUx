@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model\Leaflet;
+namespace MapUx\Model\OpenLayers;
 
 use MapUx\Model\BackgroundInterface;
 
@@ -14,7 +14,7 @@ class Background implements BackgroundInterface
     /** @var int */
     private $maxZoom;
 
-    /** @var string|null */
+    /** @var array|null */
     private $attribution;
 
     /**
@@ -31,26 +31,16 @@ class Background implements BackgroundInterface
      */
     public function createBackground(): array
     {
-        return [
-            $this->getUrl(),
-            $this->getOptions()
+        $background = [
+            'url' => $this->getUrl(),
+            'maxZoom' => $this->getMaxZoom()
         ];
-    }
-
-    /**
-     * Get the options
-     *
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        $options = ['maxZoom' => $this->getMaxZoom()];
 
         if (null !== $this->getAttribution()) {
-            $options['attribution'] = $this->getAttribution();
+            $background['attributions'] = $this->getAttribution();
         }
 
-        return $options;
+        return $background;
     }
 
     /**
@@ -88,15 +78,13 @@ class Background implements BackgroundInterface
     /**
      * @inheritDoc
      */
-    public function getAttribution(): ?string
+    public function getAttribution()
     {
         return $this->attribution;
     }
 
     /**
-     * Set the attributions
-     *
-     * @param string|null $attribution
+     * @inheritDoc
      */
     public function setAttribution($attribution): void
     {
