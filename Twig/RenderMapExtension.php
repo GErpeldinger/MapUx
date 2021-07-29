@@ -45,6 +45,10 @@ class RenderMapExtension extends AbstractExtension
             data-background="' . $background . '"
             data-view="' . $view . '"';
 
+        if (isset($_ENV['MAP_TOKEN'])) {
+            $html .= ' data-key="' . $_ENV['MAP_TOKEN'] . '"';
+        }
+
         if (null !== $attributes) {
             foreach ($attributes as $key => $value) {
                 $html .= ' ' . $key . '="' . $value . '"';
