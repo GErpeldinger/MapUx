@@ -4,50 +4,15 @@ declare(strict_types=1);
 
 namespace MapUx\Model\Mapbox;
 
-use MapUx\Model\MapInterface;
+use MapUx\Model\AbstractMap;
+use MapUx\Model\Mapbox\Layer;
 
-class Map implements MapInterface
+class Map extends AbstractMap
 {
-    /** @var string */
-    private $controller = MapInterface::MAPBOX_CONTROLLER;
-
-    /** @var float */
-    private $latitude;
-
-    /** @var float */
-    private $longitude;
-
-    /** @var int */
-    private $zoom;
+    public const DEFAULT_CONTROLLER = 'mapux--mapbox--map';
 
     /** @var string */
-    private $background = 'mapbox://styles/mapbox/streets-v11';
-
-    /**
-     * @inheritDoc
-     */
-    public function __construct(float $latitude, float $longitude, int $zoom)
-    {
-        $this->latitude  = $latitude;
-        $this->longitude = $longitude;
-        $this->zoom      = $zoom;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getController(): string
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setController(string $controller): void
-    {
-        $this->controller = $controller;
-    }
+    protected $controller = self::DEFAULT_CONTROLLER;
 
     /**
      * @inheritDoc
@@ -63,6 +28,22 @@ class Map implements MapInterface
     /**
      * @inheritDoc
      */
+    public function getLatitude(): float
+    {
+        return $this->latitude;
+    }
+
+    public function createBackground(): array
+    {
+        return [
+            $this->getBackground()->getUrl(),
+            $this->getBackgroundOptions() // Should be $this->getBackground()->getOptions() and getBackground() should be $this->getLayers()[0]
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getCenter(): array
     {
         return [
@@ -71,60 +52,35 @@ class Map implements MapInterface
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getLatitude(): float
+    public function getBackgroundOptions(): array
     {
-        return $this->latitude;
+        $options = [
+            'maxZoom' => $this->getBackground()->getMaxZoom()
+        ];
+
+        if (null !== $this->getBackground()->getAttribution()) {
+            $options['attribution'] = $this->getBackground()->getAttribution();
+        }
+
+        return $options;
     }
 
     /**
-     * @inheritDoc
+     * Get the background tile
+     *
+     * @return Layer
      */
-    public function setLatitude(float $latitude): void
+    public function getBackground(): Layer
     {
-        $this->latitude = $latitude;
+        return $this->background;
     }
 
     /**
-     * @inheritDoc
+     * Set the background tile url
+     *
+     * @param Layer $background
      */
-    public function getLongitude(): float
-    {
-        return $this->longitude;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setLongitude(float $longitude): void
-    {
-        $this->longitude = $longitude;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getZoom(): int
-    {
-        return $this->zoom;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setZoom(int $zoom): void
-    {
-        $this->zoom = $zoom;
-    }
-
-    public function getBackground(): string
-    {
-       return $this->background;
-    }
-
-    public function setBackground(string $background): void
+    public function setBackground($background): void
     {
         $this->background = $background;
     }

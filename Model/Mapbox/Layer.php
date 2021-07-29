@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model\Leaflet;
+namespace MapUx\Model\Mapbox;
 
 use MapUx\Model\AbstractLayer;
 
@@ -15,6 +15,10 @@ class Layer extends AbstractLayer
     /** @var string|null */
     protected $attribution;
 
+    /**
+     * @var string
+     */
+    protected $url = 'mapbox://styles/mapbox/streets-v11';
 
     /**
      * Get the attribution

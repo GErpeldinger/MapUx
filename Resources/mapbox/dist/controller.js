@@ -52,7 +52,7 @@ var _default = /*#__PURE__*/function (_Controller) {
       _mapboxGl["default"].accessToken = this.element.dataset.key;
       var map = new _mapboxGl["default"].Map({
         container: this.element,
-        // container ID
+        // container
         style: this.element.dataset.background,
         // style URL
         center: view.center,

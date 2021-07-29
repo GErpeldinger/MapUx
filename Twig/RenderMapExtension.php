@@ -38,12 +38,14 @@ class RenderMapExtension extends AbstractExtension
     public function renderMap(Environment $env, MapInterface $map, ?array $attributes = null): string
     {
         $view = twig_escape_filter($env, json_encode($map->createView()), 'html_attr');
+
         $background = twig_escape_filter($env, json_encode($map->createBackground()), 'html_attr');
 
-        $html = '<div
+        $html = '<div class="mapux-map" 
             data-controller="' . $map->getController() . '" 
-            data-background="' . $background . '"
-            data-view="' . $view . '"';
+            data-background="' . $map->getBackground()->getUrl() . '"
+            data-view="' . $view . '"
+            data-key="' . $_ENV['MAP_SECRET'] . '"' ;
 
         if (null !== $attributes) {
             foreach ($attributes as $key => $value) {

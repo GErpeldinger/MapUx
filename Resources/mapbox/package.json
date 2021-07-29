@@ -22,7 +22,7 @@
   },
   "peerDependencies": {
     "mapbox-gl": "^2.3.1",
-    "stimulus": "^2.0.0"
+    "stimulus": "^2.0.0",
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -30,6 +30,6 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "mapbox-gl": "^2.3.1",
-    "stimulus": "^2.0.0"
+    "stimulus": "^2.0.0",
   }
 }
