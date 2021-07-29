@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Builder\Leaflet;
+namespace MapUx\Builder\OpenLayers;
 
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Model\Leaflet\Map;
+use MapUx\Model\OpenLayers\Map;
 
 class MapBuilder implements MapBuilderInterface
 {
     /**
-     * Create a leaflet Map
+     * Create a open layers Map
      *
      * @param float $latitude
      * @param float $longitude

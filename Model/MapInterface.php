@@ -5,23 +5,16 @@ declare(strict_types=1);
 namespace MapUx\Model;
 
 /**
- * Interface Map
- *
- * @package MapUx\Model
  * @experimental
  *
  * @property string $controller
- * @property string $background
+ * @property LayerInterface $background
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
  */
 interface MapInterface
 {
-    public const LEAFLET_CONTROLLER = 'mapux--leaflet--map';
-    public const OPEN_LAYER_CONTROLLER = 'mapux--open-layer--map';
-    public const MAPBOX_CONTROLLER = 'mapux--mapbox--map';
-
     /**
      * Map constructor.
      *
@@ -49,16 +42,38 @@ interface MapInterface
     /**
      * Create the view that will be given to the controller
      *
-     * @return float[] eg. [center, zoom]
+     * @return array eg. [center, zoom]
      */
     public function createView(): array;
 
     /**
+     * Create the background layer that will be given to the controller
+     *
+     * @return array eg. [url, maxZoom, attribution]
+     */
+    public function createBackground(): array;
+
+    /**
      * Get the center of the map
      *
-     * @return array [latitude, longitude] || [longitude, latitude]
+     * @return float[] [latitude, longitude] || [longitude, latitude]
      */
     public function getCenter(): array;
+
+
+    /**
+     * Get the background tile
+     *
+     * @return LayerInterface
+     */
+    public function getBackground();
+
+    /**
+     * Set the background tile
+     *
+     * @param LayerInterface $background
+     */
+    public function setBackground($background): void;
 
     /**
      * Get the latitude
@@ -101,20 +116,4 @@ interface MapInterface
      * @param int $zoom
      */
     public function setZoom(int $zoom): void;
-
-
-    /**
-     * Get the background tile
-     *
-     * @return string
-     */
-    public function getBackground(): string;
-
-    /**
-     * Set the background tile url
-     *
-     * @param string $background
-     */
-    public function setBackground(string $background): void;
-
 }
