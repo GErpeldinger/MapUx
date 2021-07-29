@@ -41,7 +41,8 @@ class MapExtension extends AbstractExtension
                 class="mapux-map"
                 data-controller="' . $map->getController() . '" 
                 data-background="' . $map->getBackground() . '"
-                data-view="' . $view . '"
+                data-view="' . $view . '" 
+                data-key="' . $_ENV['MAP_SECRET'] . '"
              ></div>
         ';
 

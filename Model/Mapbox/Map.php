@@ -2,44 +2,26 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model\OpenLayer;
+namespace MapUx\Model\Mapbox;
 
 use MapUx\Model\MapInterface;
 
 class Map implements MapInterface
 {
-    /**
-     * World Geodetic System 1984, used in GPS
-     */
-    public const PROJECTION_WGS84 = 'EPSG:4326';
+    /** @var string */
+    private $controller = MapInterface::MAPBOX_CONTROLLER;
 
-    /**
-     * @var string
-     */
-    private $controller = MapInterface::OPEN_LAYER_CONTROLLER;
-
-    /**
-     * @var float
-     */
+    /** @var float */
     private $latitude;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $longitude;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $zoom;
 
-    /**
-     * @var string
-     */
-    private $projection = self::PROJECTION_WGS84;
-
     /** @var string */
-    private $background = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    private $background = 'mapbox://styles/mapbox/streets-v11';
 
     /**
      * @inheritDoc
@@ -73,9 +55,8 @@ class Map implements MapInterface
     public function createView(): array
     {
         return [
-            'center'     => $this->getCenter(),
-            'zoom'       => $this->getZoom(),
-            'projection' => $this->getProjection()
+            'center' => $this->getCenter(),
+            'zoom'   => $this->getZoom(),
         ];
     }
 
@@ -85,8 +66,8 @@ class Map implements MapInterface
     public function getCenter(): array
     {
         return [
-            $this->getLongitude(),
-            $this->getLatitude()
+            'lon' => $this->getLongitude(),
+            'lat' => $this->getLatitude(),
         ];
     }
 
@@ -138,25 +119,9 @@ class Map implements MapInterface
         $this->zoom = $zoom;
     }
 
-    /**
-     * @return string
-     */
-    public function getProjection(): string
-    {
-        return $this->projection;
-    }
-
-    /**
-     * @param string $projection
-     */
-    public function setProjection(string $projection): void
-    {
-        $this->projection = $projection;
-    }
-
     public function getBackground(): string
     {
-        return $this->background;
+       return $this->background;
     }
 
     public function setBackground(string $background): void

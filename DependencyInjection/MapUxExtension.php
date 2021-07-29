@@ -7,6 +7,7 @@ namespace MapUx\DependencyInjection;
 use Exception;
 use MapUx\Builder\Leaflet\MapBuilder as LeafletMapBuilder;
 use MapUx\Builder\OpenLayer\MapBuilder as OpenLayerMapBuilder;
+use MapUx\Builder\Mapbox\MapBuilder as MapboxMapBuilder;
 use MapUx\Builder\MapBuilderInterface;
 use MapUx\Twig\MapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,6 +19,7 @@ class MapUxExtension extends Extension
 {
     private const LEAFLET = 'leaflet';
     private const OPEN_LAYER = 'open_layer';
+    private const MAPBOX = 'mapbox';
 
     /** @var ContainerBuilder */
     private $container;
@@ -55,6 +57,11 @@ class MapUxExtension extends Extension
             case self::OPEN_LAYER:
                 $this->container
                     ->setDefinition('mapux.builder', new Definition(OpenLayerMapBuilder::class))
+                    ->setPublic(false);
+                break;
+            case self::MAPBOX:
+                $this->container
+                    ->setDefinition('mapux.builder', new Definition(MapboxMapBuilder::class))
                     ->setPublic(false);
                 break;
             default:

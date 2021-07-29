@@ -20,6 +20,7 @@ interface MapInterface
 {
     public const LEAFLET_CONTROLLER = 'mapux--leaflet--map';
     public const OPEN_LAYER_CONTROLLER = 'mapux--open-layer--map';
+    public const MAPBOX_CONTROLLER = 'mapux--mapbox--map';
 
     /**
      * Map constructor.
