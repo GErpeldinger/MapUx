@@ -40,10 +40,14 @@ class RenderMapExtension extends AbstractExtension
         $view = twig_escape_filter($env, json_encode($map->createView()), 'html_attr');
         $background = twig_escape_filter($env, json_encode($map->createBackground()), 'html_attr');
 
-        $html = '<div
+        $html = '<div 
             data-controller="' . $map->getController() . '" 
             data-background="' . $background . '"
             data-view="' . $view . '"';
+
+        if (isset($_ENV['MAP_TOKEN'])) {
+            $html .= ' data-key="' . $_ENV['MAP_TOKEN'] . '"';
+        }
 
         if (null !== $attributes) {
             foreach ($attributes as $key => $value) {
