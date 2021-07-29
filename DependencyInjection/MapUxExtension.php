@@ -5,25 +5,26 @@ declare(strict_types=1);
 namespace MapUx\DependencyInjection;
 
 use Exception;
-use MapUx\Builder\Leaflet\MapBuilder as LeafletMapBuilder;
-use MapUx\Builder\OpenLayer\MapBuilder as OpenLayerMapBuilder;
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Twig\MapExtension;
+use MapUx\Builder\Leaflet\MapBuilder as LeafletMapBuilder;
+use MapUx\Builder\OpenLayers\MapBuilder as OpenLayersMapBuilder;
+use MapUx\Twig\RenderMapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Twig\Environment;
 
+/**
+ * @final
+ * @experimental
+ */
 class MapUxExtension extends Extension
 {
     private const LEAFLET = 'leaflet';
-    private const OPEN_LAYER = 'open_layer';
+    private const OPEN_LAYERS = 'open-layers';
 
     /** @var ContainerBuilder */
     private $container;
-
-    /** @var array */
-    private $configs;
 
     /**
      * @inheritDoc
@@ -32,9 +33,8 @@ class MapUxExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $this->container = $container;
-        $this->configs = $configs;
 
-        $this->selectMapLibrary();
+        $this->selectMapLibrary($configs[0]['library']);
 
         if (class_exists(Environment::class)) {
             $this->addTwigExtension();
@@ -42,23 +42,24 @@ class MapUxExtension extends Extension
     }
 
     /**
+     * @param string $library
      * @throws Exception
      */
-    private function selectMapLibrary(): void
+    private function selectMapLibrary(string $library): void
     {
-        switch ($this->configs[0]['library']) {
+        switch ($library) {
             case self::LEAFLET:
                 $this->container
                     ->setDefinition('mapux.builder', new Definition(LeafletMapBuilder::class))
                     ->setPublic(false);
                 break;
-            case self::OPEN_LAYER:
+            case self::OPEN_LAYERS:
                 $this->container
-                    ->setDefinition('mapux.builder', new Definition(OpenLayerMapBuilder::class))
+                    ->setDefinition('mapux.builder', new Definition(OpenLayersMapBuilder::class))
                     ->setPublic(false);
                 break;
             default:
-                throw new Exception('Library is not correctly configured in config file.');
+                throw new Exception('Library is not correctly configured in "config/packages/mapux.yaml" file.');
         }
 
         $this->container
@@ -69,7 +70,7 @@ class MapUxExtension extends Extension
     private function addTwigExtension(): void
     {
         $this->container
-            ->setDefinition('mapux.twig_extension', new Definition(MapExtension::class))
+            ->setDefinition('mapux.twig_extension', new Definition(RenderMapExtension::class))
             ->addTag('twig.extension')
             ->setPublic(false);
     }

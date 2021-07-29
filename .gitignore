@@ -1,7 +1,7 @@
 ###> Project ###
 /vendor/
 composer.lock
-/Resources/*/node_modules/
+/Resources/*/node_modules
 /Resources/*/yarn.lock
 ###< Project ###
 

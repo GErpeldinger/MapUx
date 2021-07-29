@@ -4,47 +4,21 @@ declare(strict_types=1);
 
 namespace MapUx\Model\Leaflet;
 
-use MapUx\Model\MapInterface;
+use MapUx\Model\AbstractMap;
 
-class Map implements MapInterface
+/**
+ * @final
+ * @experimental
+ */
+class Map extends AbstractMap
 {
+    public const DEFAULT_CONTROLLER = 'mapux--leaflet--map';
+
     /** @var string */
-    private $controller = MapInterface::LEAFLET_CONTROLLER;
+    protected $controller = self::DEFAULT_CONTROLLER;
 
-    /** @var float */
-    private $latitude;
-
-    /** @var float */
-    private $longitude;
-
-    /** @var int */
-    private $zoom;
-
-    /**
-     * @inheritDoc
-     */
-    public function __construct(float $latitude, float $longitude, int $zoom)
-    {
-        $this->latitude  = $latitude;
-        $this->longitude = $longitude;
-        $this->zoom      = $zoom;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getController(): string
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setController(string $controller): void
-    {
-        $this->controller = $controller;
-    }
+    /** @var Layer */
+    protected $background;
 
     /**
      * @inheritDoc
@@ -54,6 +28,14 @@ class Map implements MapInterface
         return [
             $this->getCenter(),
             $this->getZoom(),
+        ];
+    }
+
+    public function createBackground(): array
+    {
+        return [
+            $this->getBackground()->getUrl(),
+            $this->getBackgroundOptions()
         ];
     }
 
@@ -68,51 +50,36 @@ class Map implements MapInterface
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getLatitude(): float
+    public function getBackgroundOptions(): array
     {
-        return $this->latitude;
+        $options = [
+            'maxZoom' => $this->getBackground()->getMaxZoom()
+        ];
+
+        if (null !== $this->getBackground()->getAttribution()) {
+            $options['attribution'] = $this->getBackground()->getAttribution();
+        }
+
+        return $options;
     }
 
     /**
-     * @inheritDoc
+     * Get the background tile
+     *
+     * @return Layer
      */
-    public function setLatitude(float $latitude): void
+    public function getBackground(): Layer
     {
-        $this->latitude = $latitude;
+        return $this->background;
     }
 
     /**
-     * @inheritDoc
+     * Set the background tile url
+     *
+     * @param Layer $background
      */
-    public function getLongitude(): float
+    public function setBackground($background): void
     {
-        return $this->longitude;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setLongitude(float $longitude): void
-    {
-        $this->longitude = $longitude;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getZoom(): int
-    {
-        return $this->zoom;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setZoom(int $zoom): void
-    {
-        $this->zoom = $zoom;
+        $this->background = $background;
     }
 }

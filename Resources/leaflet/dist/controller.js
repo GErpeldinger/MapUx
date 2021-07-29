@@ -3,13 +3,21 @@
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports["default"] = void 0;
 
 var _stimulus = require("stimulus");
 
 var L = _interopRequireWildcard(require("leaflet"));
+
+var _markerIcon = _interopRequireDefault(require("leaflet/dist/images/marker-icon.png"));
+
+var _markerIcon2x = _interopRequireDefault(require("leaflet/dist/images/marker-icon-2x.png"));
+
+var _markerShadow = _interopRequireDefault(require("leaflet/dist/images/marker-shadow.png"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -48,46 +56,47 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var _default = /*#__PURE__*/function (_Controller) {
-  _inherits(_default, _Controller);
+    _inherits(_default, _Controller);
 
-  var _super = _createSuper(_default);
+    var _super = _createSuper(_default);
 
-  function _default() {
-    _classCallCheck(this, _default);
+    function _default() {
+        _classCallCheck(this, _default);
 
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(_default, [{
-    key: "connect",
-    value: function connect() {
-      var _L$map;
-
-      this.redefineIcons();
-      var view = JSON.parse(this.element.dataset.view);
-
-      var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
-
-      L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-        maxZoom: 20,
-        attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-      L.marker([44.922966, -0.460516]).addTo(map);
-    } // for some obscure reason, when we use Webpack, we have to redefine the icons
-
-  }, {
-    key: "redefineIcons",
-    value: function redefineIcons() {
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-      });
+        return _super.apply(this, arguments);
     }
-  }]);
 
-  return _default;
+    _createClass(_default, [{
+        key: "connect",
+        value: function connect() {
+            var _L$map;
+
+            this.redefineIcons();
+            var view = JSON.parse(this.element.dataset.view);
+            var background = JSON.parse(this.element.dataset.background);
+
+            var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
+
+            L.tileLayer.apply(L, _toConsumableArray(background)).addTo(map);
+        }
+        /**
+         * for some obscure reason, when we use Webpack, we have to redefine the icons :/
+         * https://github.com/Leaflet/Leaflet/issues/4968
+         */
+
+    }, {
+        key: "redefineIcons",
+        value: function redefineIcons() {
+            delete L.Icon.Default.prototype._getIconUrl;
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: _markerIcon2x["default"],
+                iconUrl: _markerIcon["default"],
+                shadowUrl: _markerShadow["default"]
+            });
+        }
+    }]);
+
+    return _default;
 }(_stimulus.Controller);
 
 exports["default"] = _default;
