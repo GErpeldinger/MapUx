@@ -1,5 +1,5 @@
 {
-  "name": "@mapux/google",
+  "name": "@mapux/google-maps",
   "version": "1.0.0",
   "license": "MIT",
   "symfony": {
@@ -13,19 +13,18 @@
     }
   },
   "scripts": {
-    "build": "babel src -d dist",
-    "test": "babel src -d dist && jest",
-    "lint": "eslint src test"
+    "build": "babel src -d dist"
   },
   "peerDependencies": {
     "@googlemaps/js-api-loader": "^1.12.1",
     "stimulus": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/preset-env": "^7.12.7",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.8",
     "@googlemaps/js-api-loader": "^1.12.1",
     "stimulus": "^2.0.0"
   }
