@@ -14,19 +14,11 @@ class Map extends AbstractMap
 {
     public const DEFAULT_CONTROLLER = 'mapux--open-layers--map';
 
-    /**
-     * World Geodetic System 1984, used in GPS
-     */
-    public const PROJECTION_WGS84 = 'EPSG:4326';
-
     /** @var string */
     protected $controller = self::DEFAULT_CONTROLLER;
 
     /** @var Layer */
     protected $background;
-
-    /** @var string */
-    private $projection = self::PROJECTION_WGS84;
 
     /**
      * @inheritDoc
@@ -36,7 +28,6 @@ class Map extends AbstractMap
         return [
             'center'     => $this->getCenter(),
             'zoom'       => $this->getZoom(),
-            'projection' => $this->getProjection()
         ];
     }
 
@@ -83,25 +74,5 @@ class Map extends AbstractMap
     public function setBackground($background): void
     {
         $this->background = $background;
-    }
-
-    /**
-     * Get the projection
-     *
-     * @return string
-     */
-    public function getProjection(): string
-    {
-        return $this->projection;
-    }
-
-    /**
-     * Set the projection
-     *
-     * @param string $projection
-     */
-    public function setProjection(string $projection): void
-    {
-        $this->projection = $projection;
     }
 }

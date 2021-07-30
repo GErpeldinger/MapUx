@@ -1,23 +1,55 @@
 import { Controller } from 'stimulus';
 
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
+import * as ol from "ol";
+import * as source from 'ol/source';
+import * as layer from "ol/layer";
+import * as geom from "ol/geom";
+import * as proj from "ol/proj";
 
 export default class extends Controller {
     connect() {
-        const view = new View(JSON.parse(this.element.dataset.view))
-        const background = new XYZ(JSON.parse(this.element.dataset.background))
+        const map = this.createMap()
+        this.addMarkerTo(map)
+    }
 
-        const tileLayer = new TileLayer({
+    createMap() {
+        const view = JSON.parse(this.element.dataset.view)
+        const background = new source.XYZ(JSON.parse(this.element.dataset.background))
+
+        const tileLayer = new layer.Tile({
             source: background
         })
 
-        new Map({
+        return new ol.Map({
             target: this.element,
             layers: [tileLayer],
-            view: view
+            view: new ol.View({
+                center: proj.fromLonLat(view.center),
+                zoom: view.zoom
+            })
         })
+    }
+
+    addMarkerTo(map) {
+        if (this.element.dataset.markers) {
+            const markersList = JSON.parse(this.element.dataset.markers)
+
+            const markers = []
+            markersList.forEach(marker => {
+                markers.push(new ol.Feature({
+                    geometry: new geom.Point(
+                        proj.fromLonLat([marker.position.longitude, marker.position.latitude])
+                    )
+                }));
+            })
+
+            const markersLayer = new layer.Vector({
+                source: new source.Vector({
+                    features: markers
+                }),
+            })
+
+            map.addLayer(markersLayer)
+        }
     }
 }
