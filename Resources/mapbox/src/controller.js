@@ -1,16 +1,15 @@
 import { Controller } from 'stimulus';
 import mapboxgl from 'mapbox-gl';
+import * as MapFunctions from "./MapFunctions.js";
+
 
 export default class extends Controller {
     connect() {
         const map = this.createMap()
-        this.addMarkersTo(map)
 
         if (map) {
-            const event = document.createEvent('Event')
-            event.initEvent('MapIsLoaded', true, true)
-            event.map = map
-            document.dispatchEvent(event)
+            this.addMarkersTo(map)
+            MapFunctions.throwMapEvent(map)
         }
     }
 

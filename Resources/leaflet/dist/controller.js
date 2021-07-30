@@ -17,6 +17,8 @@ var _markerIcon2x = _interopRequireDefault(require("leaflet/dist/images/marker-i
 
 var _markerShadow = _interopRequireDefault(require("leaflet/dist/images/marker-shadow.png"));
 
+var MapFunctions = _interopRequireWildcard(require("./MapFunctions.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -71,7 +73,11 @@ var _default = /*#__PURE__*/function (_Controller) {
     value: function connect() {
       this.redefineIcons();
       var map = this.createMap();
-      this.addMarkersTo(map);
+
+      if (map) {
+        this.addMarkersTo(map);
+        MapFunctions.throwMapEvent(map);
+      }
     }
   }, {
     key: "createMap",

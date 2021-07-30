@@ -1,16 +1,19 @@
 import { Controller } from 'stimulus';
 import * as L from 'leaflet';
-
 import marker from 'leaflet/dist/images/marker-icon.png';
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import * as MapFunctions from "./MapFunctions.js";
 
 export default class extends Controller {
     connect() {
         this.redefineIcons()
 
         const map = this.createMap()
-        this.addMarkersTo(map)
+        if(map) {
+            this.addMarkersTo(map)
+            MapFunctions.throwMapEvent(map)
+        }
     }
 
     createMap() {
