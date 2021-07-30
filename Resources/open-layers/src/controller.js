@@ -5,11 +5,15 @@ import * as source from 'ol/source';
 import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as proj from "ol/proj";
+import * as MapFunctions from "./MapFunctions";
 
 export default class extends Controller {
     connect() {
         const map = this.createMap()
-        this.addMarkerTo(map)
+        if(map) {
+            this.addMarkerTo(map)
+            MapFunctions.throwMapEvent(map)
+        }
     }
 
     createMap() {

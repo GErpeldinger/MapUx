@@ -19,6 +19,8 @@ var geom = _interopRequireWildcard(require("ol/geom"));
 
 var proj = _interopRequireWildcard(require("ol/proj"));
 
+var MapFunctions = _interopRequireWildcard(require("./MapFunctions"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -58,7 +60,11 @@ var _default = /*#__PURE__*/function (_Controller) {
     key: "connect",
     value: function connect() {
       var map = this.createMap();
-      this.addMarkerTo(map);
+
+      if (map) {
+        this.addMarkerTo(map);
+        MapFunctions.throwMapEvent(map);
+      }
     }
   }, {
     key: "createMap",
