@@ -1,18 +1,28 @@
 import { Controller } from 'stimulus';
+import { Loader } from "@googlemaps/js-api-loader";
 import * as MapFunctions from "./MapFunctions.js";
-import {Loader} from "@googlemaps/js-api-loader";
 
 export default class extends Controller {
-    connect() {
-        const map = this.createMap()
+    async connect() {
+        const google = await this.loadGoogleMaps()
+        const map = this.createMap(google)
+
+        if (map) {
+            this.addMarkersTo(google, map)
+            MapFunctions.throwMapEvent(map)
+        }
     }
 
-    createMap() {
-        const view = JSON.parse(this.element.dataset.view)
-
+    loadGoogleMaps() {
         const loader = new Loader({
             apiKey: this.element.dataset.key,
         })
+
+        return loader.load()
+    }
+
+    createMap(google) {
+        const view = JSON.parse(this.element.dataset.view)
 
         const options = {
             center: {
@@ -21,22 +31,11 @@ export default class extends Controller {
             },
             zoom: view.zoom
         }
-        let map
-        loader
-            .load()
-            .then(google => {
-                map = new google.maps.Map(this.element, options);
-                if(map) {
-                    this.addMarkersTo(map)
-                    MapFunctions.throwMapEvent(map)
-                }
-            }).catch(e => {
-                console.error(e);
-            })
-        return map
+
+        return new google.maps.Map(this.element, options)
     }
 
-    addMarkersTo(map) {
+    addMarkersTo(google, map) {
         if (this.element.dataset.markers) {
             const markersList = JSON.parse(this.element.dataset.markers)
 

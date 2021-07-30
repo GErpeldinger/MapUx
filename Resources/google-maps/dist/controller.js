@@ -9,6 +9,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
@@ -21,9 +25,9 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _stimulus = require("stimulus");
 
-var MapFunctions = _interopRequireWildcard(require("./MapFunctions.js"));
-
 var _jsApiLoader = require("@googlemaps/js-api-loader");
+
+var MapFunctions = _interopRequireWildcard(require("./MapFunctions.js"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -45,18 +49,51 @@ var _default = /*#__PURE__*/function (_Controller) {
 
   (0, _createClass2["default"])(_default, [{
     key: "connect",
-    value: function connect() {
-      var map = this.createMap();
-    }
-  }, {
-    key: "createMap",
-    value: function createMap() {
-      var _this = this;
+    value: function () {
+      var _connect = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
+        var google, map;
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.loadGoogleMaps();
 
-      var view = JSON.parse(this.element.dataset.view);
+              case 2:
+                google = _context.sent;
+                map = this.createMap(google);
+
+                if (map) {
+                  this.addMarkersTo(google, map);
+                  MapFunctions.throwMapEvent(map);
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function connect() {
+        return _connect.apply(this, arguments);
+      }
+
+      return connect;
+    }()
+  }, {
+    key: "loadGoogleMaps",
+    value: function loadGoogleMaps() {
       var loader = new _jsApiLoader.Loader({
         apiKey: this.element.dataset.key
       });
+      return loader.load();
+    }
+  }, {
+    key: "createMap",
+    value: function createMap(google) {
+      var view = JSON.parse(this.element.dataset.view);
       var options = {
         center: {
           lat: view.center.latitude,
@@ -64,23 +101,11 @@ var _default = /*#__PURE__*/function (_Controller) {
         },
         zoom: view.zoom
       };
-      var map;
-      loader.load().then(function (google) {
-        map = new google.maps.Map(_this.element, options);
-
-        if (map) {
-          _this.addMarkersTo(map);
-
-          MapFunctions.throwMapEvent(map);
-        }
-      })["catch"](function (e) {
-        console.error(e);
-      });
-      return map;
+      return new google.maps.Map(this.element, options);
     }
   }, {
     key: "addMarkersTo",
-    value: function addMarkersTo(map) {
+    value: function addMarkersTo(google, map) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
