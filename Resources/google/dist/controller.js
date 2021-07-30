@@ -52,11 +52,6 @@ var _default = /*#__PURE__*/function (_Controller) {
     key: "connect",
     value: function connect() {
       var map = this.createMap();
-
-      if (map) {
-        this.addMarkersTo(map);
-        MapFunctions.throwMapEvent(map);
-      }
     }
   }, {
     key: "createMap",
@@ -64,32 +59,45 @@ var _default = /*#__PURE__*/function (_Controller) {
       var _this = this;
 
       var view = JSON.parse(this.element.dataset.view);
-      var background = JSON.parse(this.element.dataset.background);
-      console.log('view : ', view);
-      console.log('bg : ', background);
       var loader = new _jsApiLoader.Loader({
-        apiKey: this.element.dataset.key,
-        version: "weekly",
-        libraries: ["places"]
+        apiKey: this.element.dataset.key
       });
-      var mapOptions = {
+      var options = {
         center: {
           lat: view.center.latitude,
           lng: view.center.longitude
         },
         zoom: view.zoom
-      }; //let map
-
+      };
+      var map;
       loader.load().then(function (google) {
-        var map = new google.maps.Map(_this.element, mapOptions);
-      })["catch"](function (e) {// do something
+        map = new google.maps.Map(_this.element, options);
+
+        if (map) {
+          _this.addMarkersTo(map);
+
+          MapFunctions.throwMapEvent(map);
+        }
+      })["catch"](function (e) {
+        console.error(e);
       });
       return map;
     }
   }, {
     key: "addMarkersTo",
     value: function addMarkersTo(map) {
-      if (this.element.dataset.markers) {}
+      if (this.element.dataset.markers) {
+        var markersList = JSON.parse(this.element.dataset.markers);
+        markersList.forEach(function (marker) {
+          var googleMarker = new google.maps.Marker({
+            position: {
+              lat: marker.position.latitude,
+              lng: marker.position.longitude
+            },
+            map: map
+          });
+        });
+      }
     }
   }]);
 
