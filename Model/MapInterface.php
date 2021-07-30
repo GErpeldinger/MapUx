@@ -12,7 +12,7 @@ namespace MapUx\Model;
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
- * @property MarkerInterface[]
+ * @property MarkerInterface[]|null $markers
  */
 interface MapInterface
 {
