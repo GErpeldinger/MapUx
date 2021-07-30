@@ -1,11 +1,22 @@
 <?php
 
-
 namespace MapUx\Model;
 
-
+/**
+ * @experimental
+ *
+ * todo Manage $attributes
+ */
 class Marker implements MarkerInterface
 {
+    /** @var float */
+    protected $latitude;
+
+    /** @var float */
+    protected $longitude;
+
+    /** @var array */
+    protected $attributes;
 
     public function __construct(float $latitude, float $longitude)
     {
@@ -13,6 +24,9 @@ class Marker implements MarkerInterface
         $this->longitude = $longitude;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPosition(): array
     {
         return [
@@ -22,22 +36,7 @@ class Marker implements MarkerInterface
     }
 
     /**
-     * @var float
-     */
-    protected float $latitude;
-
-    /**
-     * @var float
-     */
-    protected float $longitude;
-
-    /**
-     * @var array
-     */
-    protected array $attributes;
-
-    /**
-     * @return float
+     * @inheritDoc
      */
     public function getLatitude(): float
     {
@@ -45,11 +44,26 @@ class Marker implements MarkerInterface
     }
 
     /**
-     * @param float $latitude
+     * @inheritDoc
      */
     public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getLongitude(): float
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setLongitude(float $longitude): void
+    {
+        $this->longitude = $longitude;
+    }
 }

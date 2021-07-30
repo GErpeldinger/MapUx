@@ -24,13 +24,8 @@ abstract class AbstractMap implements MapInterface
     /** @var int */
     protected $zoom;
 
-    /**
-     * a list of Markers objects
-     * @var array
-     */
-    protected $markers = null;
-
-
+    /** @var MarkerInterface[]|null */
+    protected $markers;
 
     /**
      * @inheritDoc
@@ -139,15 +134,15 @@ abstract class AbstractMap implements MapInterface
     }
 
     /**
-     * @param Marker $marker
+     * @inheritDoc
      */
-    public function addMarker(Marker $marker): void
+    public function addMarker($marker): void
     {
         $this->markers[] = $marker;
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getMarkers(): ?array
     {
@@ -155,8 +150,17 @@ abstract class AbstractMap implements MapInterface
     }
 
     /**
-     * @return array|null
-     * returns array of markers positions
+     * @inheritDoc
+     */
+    public function setMarkers(?array $markers): void
+    {
+        $this->markers = $markers;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return array Array of markers positions
      */
     public function getMarkersForMap(): ?array
     {
@@ -164,11 +168,13 @@ abstract class AbstractMap implements MapInterface
         if(!$this->markers) {
             return null;
         }
+
         foreach ($this->markers as $marker) {
             $markersPositions[] = [
                 'position' => $marker->getPosition()
             ];
         }
+
         return $markersPositions;
     }
 }

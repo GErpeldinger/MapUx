@@ -47,10 +47,23 @@ var _default = /*#__PURE__*/function (_Controller) {
   _createClass(_default, [{
     key: "connect",
     value: function connect() {
+      var map = this.createMap();
+      this.addMarkersTo(map);
+
+      if (map) {
+        var event = document.createEvent('Event');
+        event.initEvent('MapIsLoaded', true, true);
+        event.map = map;
+        document.dispatchEvent(event);
+      }
+    }
+  }, {
+    key: "createMap",
+    value: function createMap() {
       var view = JSON.parse(this.element.dataset.view);
       var background = JSON.parse(this.element.dataset.background);
       _mapboxGl["default"].accessToken = this.element.dataset.key;
-      var map = new _mapboxGl["default"].Map({
+      return new _mapboxGl["default"].Map({
         container: this.element,
         // container
         style: background[0],
@@ -59,21 +72,16 @@ var _default = /*#__PURE__*/function (_Controller) {
         // starting position [lng, lat]
         zoom: view.zoom // starting zoom
 
-      }); // Adding Markers
-
+      });
+    }
+  }, {
+    key: "addMarkersTo",
+    value: function addMarkersTo(map) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
-        console.log(markersList);
         markersList.forEach(function (marker) {
           var mapboxMarker = new _mapboxGl["default"].Marker().setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
         });
-      }
-
-      if (map) {
-        var event = document.createEvent('Event');
-        event.initEvent('MapIsLoaded', true, true);
-        event.map = map;
-        document.dispatchEvent(event);
       }
     }
   }]);

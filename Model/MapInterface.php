@@ -12,6 +12,7 @@ namespace MapUx\Model;
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
+ * @property MarkerInterface[]
  */
 interface MapInterface
 {
@@ -119,18 +120,28 @@ interface MapInterface
 
     /**
      * Add marker to the map
-     * @param Marker $marker
+     *
+     * @param MarkerInterface|null $marker
      */
-    public function addMarker(Marker $marker): void;
+    public function addMarker($marker): void;
 
     /**
-     * get all the markers
-     * @return array
+     * Get all the markers
+     *
+     * @return MarkerInterface[]
      */
     public function getMarkers(): ?array;
 
     /**
-     * get all the markers attributes in order to render them
+     * Set a array of Marker
+     *
+     * @param MarkerInterface[]|null $markers
+     */
+    public function setMarkers(?array $markers): void;
+
+    /**
+     * Get all the markers attributes in order to render them
+     *
      * @return array
      */
     public function getMarkersForMap(): ?array;

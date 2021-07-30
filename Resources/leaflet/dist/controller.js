@@ -17,8 +17,6 @@ var _markerIcon2x = _interopRequireDefault(require("leaflet/dist/images/marker-i
 
 var _markerShadow = _interopRequireDefault(require("leaflet/dist/images/marker-shadow.png"));
 
-var _mapboxGl = _interopRequireDefault(require("mapbox-gl"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -71,19 +69,28 @@ var _default = /*#__PURE__*/function (_Controller) {
   _createClass(_default, [{
     key: "connect",
     value: function connect() {
+      this.redefineIcons();
+      var map = this.createMap();
+      this.addMarkersTo(map);
+    }
+  }, {
+    key: "createMap",
+    value: function createMap() {
       var _L$map;
 
-      this.redefineIcons();
       var view = JSON.parse(this.element.dataset.view);
       var background = JSON.parse(this.element.dataset.background);
 
       var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
 
-      L.tileLayer(background[0]).addTo(map); // Adding Markers
-
+      L.tileLayer.apply(L, _toConsumableArray(background)).addTo(map);
+      return map;
+    }
+  }, {
+    key: "addMarkersTo",
+    value: function addMarkersTo(map) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
-        console.log(markersList);
         markersList.forEach(function (marker) {
           var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
         });
