@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model\Google;
+namespace MapUx\Model\GoogleMaps;
 
 use MapUx\Model\AbstractMap;
-use MapUx\Model\Google\Layer;
 
 class Map extends AbstractMap
 {
-    public const DEFAULT_CONTROLLER = 'mapux--google--map';
+    public const DEFAULT_CONTROLLER = 'mapux--google-maps--map';
 
     /** @var string */
     protected $controller = self::DEFAULT_CONTROLLER;
@@ -35,13 +34,14 @@ class Map extends AbstractMap
 
     public function createBackground(): ?array
     {
-        if(!$this->getBackground()) {
+        if (!$this->getBackground()) {
             return null;
         }
-            return [
-                $this->getBackground()->getUrl(),
-                $this->getBackgroundOptions()
-            ];
+
+        return [
+            $this->getBackground()->getUrl(),
+            $this->getBackgroundOptions()
+        ];
     }
 
     /**
@@ -50,7 +50,7 @@ class Map extends AbstractMap
     public function getCenter(): array
     {
         return [
-            'latitude' => $this->getLatitude(),
+            'latitude'  => $this->getLatitude(),
             'longitude' => $this->getLongitude(),
         ];
     }

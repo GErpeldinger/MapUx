@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Builder\Google;
+namespace MapUx\Builder\GoogleMaps;
 
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Model\Google\Map;
+use MapUx\Model\GoogleMaps\Map;
 
 class MapBuilder implements MapBuilderInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MapUx\Model\Google;
+namespace MapUx\Model\GoogleMaps;
 
 use MapUx\Model\AbstractLayer;
 
