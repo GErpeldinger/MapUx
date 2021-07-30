@@ -52,7 +52,7 @@ interface MapInterface
      *
      * @return array eg. [url, maxZoom, attribution]
      */
-    public function createBackground(): array;
+    public function createBackground(): ?array;
 
     /**
      * Get the center of the map

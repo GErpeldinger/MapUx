@@ -61,7 +61,7 @@ abstract class AbstractMap implements MapInterface
     /**
      * @inheritDoc
      */
-    abstract public function createBackground(): array;
+    abstract public function createBackground(): ?array;
 
     /**
      * @inheritDoc
