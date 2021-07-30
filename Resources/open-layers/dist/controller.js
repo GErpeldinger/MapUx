@@ -9,15 +9,19 @@ exports["default"] = void 0;
 
 var _stimulus = require("stimulus");
 
-var _Map = _interopRequireDefault(require("ol/Map"));
+var ol = _interopRequireWildcard(require("ol"));
 
-var _View = _interopRequireDefault(require("ol/View"));
+var source = _interopRequireWildcard(require("ol/source"));
 
-var _Tile = _interopRequireDefault(require("ol/layer/Tile"));
+var layer = _interopRequireWildcard(require("ol/layer"));
 
-var _XYZ = _interopRequireDefault(require("ol/source/XYZ"));
+var geom = _interopRequireWildcard(require("ol/geom"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var proj = _interopRequireWildcard(require("ol/proj"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -53,16 +57,44 @@ var _default = /*#__PURE__*/function (_Controller) {
   _createClass(_default, [{
     key: "connect",
     value: function connect() {
-      var view = new _View["default"](JSON.parse(this.element.dataset.view));
-      var background = new _XYZ["default"](JSON.parse(this.element.dataset.background));
-      var tileLayer = new _Tile["default"]({
+      var map = this.createMap();
+      this.addMarkerTo(map);
+    }
+  }, {
+    key: "createMap",
+    value: function createMap() {
+      var view = JSON.parse(this.element.dataset.view);
+      var background = new source.XYZ(JSON.parse(this.element.dataset.background));
+      var tileLayer = new layer.Tile({
         source: background
       });
-      new _Map["default"]({
+      return new ol.Map({
         target: this.element,
         layers: [tileLayer],
-        view: view
+        view: new ol.View({
+          center: proj.fromLonLat(view.center),
+          zoom: view.zoom
+        })
       });
+    }
+  }, {
+    key: "addMarkerTo",
+    value: function addMarkerTo(map) {
+      if (this.element.dataset.markers) {
+        var markersList = JSON.parse(this.element.dataset.markers);
+        var markers = [];
+        markersList.forEach(function (marker) {
+          markers.push(new ol.Feature({
+            geometry: new geom.Point(proj.fromLonLat([marker.position.longitude, marker.position.latitude]))
+          }));
+        });
+        var markersLayer = new layer.Vector({
+          source: new source.Vector({
+            features: markers
+          })
+        });
+        map.addLayer(markersLayer);
+      }
     }
   }]);
 
