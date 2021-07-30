@@ -24,6 +24,8 @@ abstract class AbstractMap implements MapInterface
     /** @var int */
     protected $zoom;
 
+    /** @var MarkerInterface[]|null */
+    protected $markers;
 
     /**
      * @inheritDoc
@@ -129,5 +131,50 @@ abstract class AbstractMap implements MapInterface
     public function setZoom(int $zoom): void
     {
         $this->zoom = $zoom;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addMarker($marker): void
+    {
+        $this->markers[] = $marker;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMarkers(): ?array
+    {
+        return $this->markers;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMarkers(?array $markers): void
+    {
+        $this->markers = $markers;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return array Array of markers positions
+     */
+    public function getMarkersForMap(): ?array
+    {
+        $markersPositions = [];
+        if(!$this->markers) {
+            return null;
+        }
+
+        foreach ($this->markers as $marker) {
+            $markersPositions[] = [
+                'position' => $marker->getPosition()
+            ];
+        }
+
+        return $markersPositions;
     }
 }

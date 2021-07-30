@@ -69,15 +69,32 @@ var _default = /*#__PURE__*/function (_Controller) {
   _createClass(_default, [{
     key: "connect",
     value: function connect() {
+      this.redefineIcons();
+      var map = this.createMap();
+      this.addMarkersTo(map);
+    }
+  }, {
+    key: "createMap",
+    value: function createMap() {
       var _L$map;
 
-      this.redefineIcons();
       var view = JSON.parse(this.element.dataset.view);
       var background = JSON.parse(this.element.dataset.background);
 
       var map = (_L$map = L.map(this.element)).setView.apply(_L$map, _toConsumableArray(view));
 
       L.tileLayer.apply(L, _toConsumableArray(background)).addTo(map);
+      return map;
+    }
+  }, {
+    key: "addMarkersTo",
+    value: function addMarkersTo(map) {
+      if (this.element.dataset.markers) {
+        var markersList = JSON.parse(this.element.dataset.markers);
+        markersList.forEach(function (marker) {
+          var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+        });
+      }
     }
     /**
      * for some obscure reason, when we use Webpack, we have to redefine the icons :/
