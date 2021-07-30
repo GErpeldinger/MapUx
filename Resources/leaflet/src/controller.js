@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import marker from 'leaflet/dist/images/marker-icon.png';
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import mapboxgl from "mapbox-gl";
 
 export default class extends Controller
 {
@@ -16,6 +17,15 @@ export default class extends Controller
         const map = L.map(this.element).setView(...view)
 
         L.tileLayer(...background).addTo(map)
+
+        // Adding Markers
+        if(this.element.dataset.markers) {
+            const markersList = JSON.parse(this.element.dataset.markers)
+            console.log(markersList)
+            markersList.forEach(marker => {
+                const leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+            })
+        }
     }
 
     /**

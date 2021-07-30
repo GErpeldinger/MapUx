@@ -18,6 +18,17 @@ export default class extends Controller
             }
         );
 
+        // Adding Markers
+        if(this.element.dataset.markers) {
+            const markersList = JSON.parse(this.element.dataset.markers)
+            console.log(markersList)
+            markersList.forEach(marker => {
+                const mapboxMarker = new mapboxgl.Marker()
+                    .setLngLat([marker.position.longitude, marker.position.latitude])
+                    .addTo(map);
+            })
+        }
+
         if (map) {
             const event = document.createEvent('Event')
             event.initEvent('MapIsLoaded', true, true)

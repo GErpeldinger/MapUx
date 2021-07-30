@@ -59,7 +59,15 @@ var _default = /*#__PURE__*/function (_Controller) {
         // starting position [lng, lat]
         zoom: view.zoom // starting zoom
 
-      });
+      }); // Adding Markers
+
+      if (this.element.dataset.markers) {
+        var markersList = JSON.parse(this.element.dataset.markers);
+        console.log(markersList);
+        markersList.forEach(function (marker) {
+          var mapboxMarker = new _mapboxGl["default"].Marker().setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
+        });
+      }
 
       if (map) {
         var event = document.createEvent('Event');

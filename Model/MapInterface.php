@@ -116,4 +116,22 @@ interface MapInterface
      * @param int $zoom
      */
     public function setZoom(int $zoom): void;
+
+    /**
+     * Add marker to the map
+     * @param Marker $marker
+     */
+    public function addMarker(Marker $marker): void;
+
+    /**
+     * get all the markers
+     * @return array
+     */
+    public function getMarkers(): ?array;
+
+    /**
+     * get all the markers attributes in order to render them
+     * @return array
+     */
+    public function getMarkersForMap(): ?array;
 }

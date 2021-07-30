@@ -39,14 +39,19 @@ class RenderMapExtension extends AbstractExtension
     {
         $view = twig_escape_filter($env, json_encode($map->createView()), 'html_attr');
         $background = twig_escape_filter($env, json_encode($map->createBackground()), 'html_attr');
+        $markers = twig_escape_filter($env, json_encode($map->getMarkersForMap()), 'html_attr');
 
         $html = '<div 
             data-controller="' . $map->getController() . '" 
-            data-background="' . $background . '"
+            data-background="' . $background . '" 
             data-view="' . $view . '"';
 
         if (isset($_ENV['MAP_TOKEN'])) {
             $html .= ' data-key="' . $_ENV['MAP_TOKEN'] . '"';
+        }
+
+        if ($map->getMarkers()) {
+            $html .= ' data-markers="' . $markers . '"';
         }
 
         if (null !== $attributes) {
