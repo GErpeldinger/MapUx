@@ -52,4 +52,18 @@ interface MarkerInterface
      * @param float $longitude
      */
     public function setLongitude(float $longitude): void;
+
+    /**
+     * Set the longitude of the marker
+     *
+     * @param Tooltip $tooltip
+     */
+    public function setTooltip(Tooltip $tooltip): void;
+
+    /**
+     * Set the longitude of the marker
+     *
+     * @return Tooltip $tooltip
+     */
+    public function getTooltip(): ?Tooltip;
 }
