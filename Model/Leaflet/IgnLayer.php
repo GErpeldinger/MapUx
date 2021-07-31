@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace MapUx\Model\Leaflet;
 
 use MapUx\Model\Layer;
@@ -83,7 +85,7 @@ class IgnLayer extends Layer
             throw new \Exception(
                 'This layer resource doesn\'t exist in Mapux IgnLayer. Available resources are ' .
                 implode(', ', array_keys(self::IGN_LAYERS)) .
-                ' Feel free to add your own resources with the addResource() method');
+                ' Feel free to add your own resources with the addNewResource() method');
         }
 
         return
