@@ -67,18 +67,32 @@ var _default = /*#__PURE__*/function (_Controller) {
       }
     }
   }, {
+    key: "createSource",
+    value: function createSource(layerSource) {
+      switch (layerSource) {
+        case 'OSM':
+          return new source.OSM();
+          break;
+
+        default:
+          return new source.XYZ();
+      }
+    }
+  }, {
     key: "createMap",
     value: function createMap() {
       var view = JSON.parse(this.element.dataset.view);
-      var background = new source.XYZ(JSON.parse(this.element.dataset.background));
+      var background = JSON.parse(this.element.dataset.background);
+      var layerSource = this.createSource(background.layerSource);
+      layerSource.setUrl(background.url);
       var tileLayer = new layer.Tile({
-        source: background
+        source: layerSource
       });
       return new ol.Map({
         target: this.element,
         layers: [tileLayer],
         view: new ol.View({
-          center: proj.fromLonLat(view.center),
+          center: proj.fromLonLat([view.center.longitude, view.center.latitude]),
           zoom: view.zoom
         })
       });

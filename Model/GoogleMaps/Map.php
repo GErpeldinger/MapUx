@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MapUx\Model\GoogleMaps;
 
 use MapUx\Model\AbstractMap;
+use MapUx\Model\GoogleMaps\Layer as GoogleMapsLayer;
 
 class Map extends AbstractMap
 {
@@ -39,8 +40,8 @@ class Map extends AbstractMap
         }
 
         return [
-            $this->getBackground()->getUrl(),
-            $this->getBackgroundOptions()
+            'url'     => $this->getBackground()->getUrl(),
+            'options' => $this->getBackgroundOptions()
         ];
     }
 
@@ -57,15 +58,17 @@ class Map extends AbstractMap
 
     public function getBackgroundOptions(): ?array
     {
-        $options = [
-            'maxZoom' => $this->getBackground()->getMaxZoom()
-        ];
+        if(null !== $this->getBackground()->getMaxZoom()) {
+            $options = [
+                'maxZoom' => $this->getBackground()->getMaxZoom()
+            ];
+        }
 
         if (null !== $this->getBackground()->getAttribution()) {
             $options['attribution'] = $this->getBackground()->getAttribution();
         }
 
-        return $options;
+        return $options ?? [];
     }
 
     /**
@@ -87,4 +90,14 @@ class Map extends AbstractMap
     {
         $this->background = $background;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultBackground(): void
+    {
+        $background = new GoogleMapsLayer();
+        $this->background = $background;
+    }
+
 }
