@@ -17,12 +17,12 @@ export default class extends Controller {
     }
 
     createMap() {
-        const view = JSON.parse(this.element.dataset.view)
+        const view       = JSON.parse(this.element.dataset.view)
         const background = JSON.parse(this.element.dataset.background)
 
-        const map = L.map(this.element).setView(...view)
+        const map = L.map(this.element).setView([view.center.latitude, view.center.longitude], view.zoom)
 
-        L.tileLayer(...background).addTo(map)
+        L.tileLayer(background.url, background.options).addTo(map)
 
         return map
     }

@@ -14,17 +14,17 @@ export default class extends Controller {
     }
 
     createMap() {
-        const view = JSON.parse(this.element.dataset.view)
+        const view       = JSON.parse(this.element.dataset.view)
         const background = JSON.parse(this.element.dataset.background)
 
         mapboxgl.accessToken = this.element.dataset.key
 
         return new mapboxgl.Map(
             {
-                container: this.element, // container
-                style: background[0],    // style URL
-                center: view.center,     // starting position [lng, lat]
-                zoom: view.zoom          // starting zoom
+                container: this.element,                                // container
+                style: background.url,                                  // style URL
+                center: [view.center.longitude, view.center.latitude],  // starting position [lng, lat]
+                zoom: view.zoom                                         // starting zoom
             }
         );
     }

@@ -14,6 +14,8 @@ class MapBuilder implements MapBuilderInterface
      */
     public function createMap(float $latitude, float $longitude, int $zoom): Map
     {
-        return new Map($latitude, $longitude, $zoom);
+        $map = new Map($latitude, $longitude, $zoom);
+        $map->setDefaultBackground();
+        return $map;
     }
 }

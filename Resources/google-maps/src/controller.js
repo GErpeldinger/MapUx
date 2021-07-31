@@ -5,7 +5,7 @@ import * as MapFunctions from "./MapFunctions.js";
 export default class extends Controller {
     async connect() {
         this.google = await this.loadGoogleMaps()
-        const map = this.createMap()
+        const map   = this.createMap()
 
         if (map) {
             this.addMarkersTo(map)

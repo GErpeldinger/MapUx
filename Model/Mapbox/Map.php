@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MapUx\Model\Mapbox;
 
 use MapUx\Model\AbstractMap;
-use MapUx\Model\Mapbox\Layer;
+use MapUx\Model\Mapbox\Layer as MapboxLayer;
 
 class Map extends AbstractMap
 {
@@ -36,8 +36,8 @@ class Map extends AbstractMap
     public function createBackground(): array
     {
         return [
-            $this->getBackground()->getUrl(),
-            $this->getBackgroundOptions() // Should be $this->getBackground()->getOptions() and getBackground() should be $this->getLayers()[0]
+            'url'     => $this->getBackground()->getUrl(),
+            'options' => $this->getBackgroundOptions() // Should be $this->getBackground()->getOptions() and getBackground() should be $this->getLayers()[0]
         ];
     }
 
@@ -47,22 +47,24 @@ class Map extends AbstractMap
     public function getCenter(): array
     {
         return [
-            'lon' => $this->getLongitude(),
-            'lat' => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
+            'latitude'  => $this->getLatitude(),
         ];
     }
 
     public function getBackgroundOptions(): array
     {
-        $options = [
-            'maxZoom' => $this->getBackground()->getMaxZoom()
-        ];
+        if(null !== $this->getBackground()->getMaxZoom()) {
+            $options = [
+                'maxZoom' => $this->getBackground()->getMaxZoom()
+            ];
+        }
 
         if (null !== $this->getBackground()->getAttribution()) {
             $options['attribution'] = $this->getBackground()->getAttribution();
         }
 
-        return $options;
+        return $options ?? [];
     }
 
     /**
@@ -70,7 +72,7 @@ class Map extends AbstractMap
      *
      * @return Layer
      */
-    public function getBackground(): Layer
+    public function getBackground(): ?Layer
     {
         return $this->background;
     }
@@ -82,6 +84,15 @@ class Map extends AbstractMap
      */
     public function setBackground($background): void
     {
+        $this->background = $background;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultBackground(): void
+    {
+        $background = new MapboxLayer();
         $this->background = $background;
     }
 }

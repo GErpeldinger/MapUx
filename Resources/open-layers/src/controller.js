@@ -16,19 +16,32 @@ export default class extends Controller {
         }
     }
 
+    createSource(layerSource) {
+        switch (layerSource) {
+            case 'OSM':
+                return new source.OSM()
+                break
+            default:
+                return new source.XYZ()
+        }
+    }
+
     createMap() {
-        const view = JSON.parse(this.element.dataset.view)
-        const background = new source.XYZ(JSON.parse(this.element.dataset.background))
+        const view        = JSON.parse(this.element.dataset.view)
+        const background  = JSON.parse(this.element.dataset.background)
+        const layerSource = this.createSource(background.layerSource);
+
+        layerSource.setUrl(background.url);
 
         const tileLayer = new layer.Tile({
-            source: background
+            source: layerSource
         })
 
         return new ol.Map({
             target: this.element,
             layers: [tileLayer],
             view: new ol.View({
-                center: proj.fromLonLat(view.center),
+                center: proj.fromLonLat([view.center.longitude, view.center.latitude]),
                 zoom: view.zoom
             })
         })
