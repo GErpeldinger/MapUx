@@ -6,10 +6,7 @@ namespace MapUx\DependencyInjection;
 
 use Exception;
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Builder\Leaflet\MapBuilder as LeafletMapBuilder;
-use MapUx\Builder\OpenLayers\MapBuilder as OpenLayersMapBuilder;
-use MapUx\Builder\Mapbox\MapBuilder as MapboxMapBuilder;
-use MapUx\Builder\GoogleMaps\MapBuilder as GoogleMapBuilder;
+use MapUx\Builder\MapBuilder;
 use MapUx\Twig\RenderMapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -52,30 +49,10 @@ class MapUxExtension extends Extension
      */
     private function selectMapLibrary(string $library): void
     {
-        switch ($library) {
-            case self::LEAFLET:
-                $this->container
-                    ->setDefinition('mapux.builder', new Definition(LeafletMapBuilder::class))
-                    ->setPublic(false);
-                break;
-            case self::OPEN_LAYERS:
-                $this->container
-                    ->setDefinition('mapux.builder', new Definition(OpenLayersMapBuilder::class))
-                    ->setPublic(false);
-                break;
-            case self::MAPBOX:
-                $this->container
-                    ->setDefinition('mapux.builder', new Definition(MapboxMapBuilder::class))
-                    ->setPublic(false);
-                break;
-            case self::GOOGLE_MAPS:
-                $this->container
-                    ->setDefinition('mapux.builder', new Definition(GoogleMapBuilder::class))
-                    ->setPublic(false);
-                break;
-            default:
-                throw new Exception('Library is not correctly configured in "config/packages/mapux.yaml" file.');
-        }
+
+        $this->container
+            ->setDefinition('mapux.builder', new Definition(MapBuilder::class, [$library]))
+            ->setPublic(false);
 
         $this->container
             ->setAlias(MapBuilderInterface::class, 'mapux.builder')
