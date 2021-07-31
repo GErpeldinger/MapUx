@@ -99,6 +99,10 @@ var _default = /*#__PURE__*/function (_Controller) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
           var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+
+          if (marker.tooltip) {
+            leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options);
+          }
         });
       }
     }

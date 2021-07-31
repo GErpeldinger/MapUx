@@ -18,6 +18,9 @@ class Marker implements MarkerInterface
     /** @var array */
     protected $attributes;
 
+    /** @var Tooltip */
+    protected $tooltip;
+
     public function __construct(float $latitude, float $longitude)
     {
         $this->latitude  = $latitude;
@@ -66,4 +69,22 @@ class Marker implements MarkerInterface
     {
         $this->longitude = $longitude;
     }
+
+    /**
+     * @return Tooltip
+     */
+    public function getTooltip(): ?Tooltip
+    {
+        return $this->tooltip;
+    }
+
+    /**
+     * @param Tooltip $tooltip
+     */
+    public function setTooltip(Tooltip $tooltip): void
+    {
+        $this->tooltip = $tooltip;
+    }
+
+
 }

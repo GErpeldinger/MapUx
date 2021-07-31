@@ -171,7 +171,8 @@ abstract class AbstractMap implements MapInterface
 
         foreach ($this->markers as $marker) {
             $markersPositions[] = [
-                'position' => $marker->getPosition()
+                'position' => $marker->getPosition(),
+                'tooltip'  => $marker->getTooltip() ? $marker->getTooltip()->makeTooltip() : null
             ];
         }
 
