@@ -1,6 +1,6 @@
 import { Controller } from 'stimulus';
 import { Loader } from "@googlemaps/js-api-loader";
-import * as MapFunctions from "./MapFunctions.js";
+import * as functions from "./functions.js";
 
 export default class extends Controller {
     async connect() {
@@ -9,7 +9,7 @@ export default class extends Controller {
 
         if (map) {
             this.addMarkersTo(map)
-            MapFunctions.throwMapEvent(map)
+            functions.throwMapEvent(map)
         }
     }
 

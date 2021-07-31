@@ -22,13 +22,13 @@ use Twig\Environment;
  */
 class MapUxExtension extends Extension
 {
-    private const LEAFLET = 'leaflet';
+    private const LEAFLET     = 'leaflet';
     private const OPEN_LAYERS = 'open-layers';
-    private const MAPBOX = 'mapbox';
+    private const MAPBOX      = 'mapbox';
     private const GOOGLE_MAPS = 'google-maps';
 
     /** @var ContainerBuilder */
-    private $container;
+    private ContainerBuilder $container;
 
     /**
      * @inheritDoc

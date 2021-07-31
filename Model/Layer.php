@@ -7,36 +7,28 @@ namespace MapUx\Model;
 /**
  * @experimental
  */
-class Tooltip implements TooltipInterface
+class Layer implements LayerInterface
 {
-    /** @var string */
-    protected string $content;
+    /** @var string|null */
+    private ?string $url = null;
 
-    /** @var array|null */
-    protected ?array $options = null;
+    /** @var array|null  */
+    private ?array $options = null;
 
     /**
      * @inheritDoc
      */
-    public function __construct($content)
+    public function getUrl(): ?string
     {
-        $this->content = $content;
+        return $this->url;
     }
 
     /**
      * @inheritDoc
      */
-    public function getContent(): string
+    public function setUrl(?string $url): void
     {
-        return $this->content;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
+        $this->url = $url;
     }
 
     /**

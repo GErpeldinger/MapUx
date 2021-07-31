@@ -1,29 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MapUx\Model;
 
 /**
  * @experimental
- *
- * todo Manage $attributes
  */
 class Marker implements MarkerInterface
 {
     /** @var float */
-    protected $latitude;
+    private float $latitude;
 
     /** @var float */
-    protected $longitude;
+    private float $longitude;
 
-    /** @var array */
-    protected $attributes;
+    /** @var TooltipInterface|null */
+    private ?TooltipInterface $tooltip = null;
 
-    /** @var Tooltip */
-    protected $tooltip;
-
+    /**
+     * @inheritDoc
+     */
     public function __construct(float $latitude, float $longitude)
     {
-        $this->latitude  = $latitude;
+        $this->latitude = $latitude;
         $this->longitude = $longitude;
     }
 
@@ -71,17 +71,17 @@ class Marker implements MarkerInterface
     }
 
     /**
-     * @return Tooltip
+     * @inheritDoc
      */
-    public function getTooltip(): ?Tooltip
+    public function getTooltip(): ?TooltipInterface
     {
         return $this->tooltip;
     }
 
     /**
-     * @param Tooltip $tooltip
+     * @inheritDoc
      */
-    public function setTooltip(Tooltip $tooltip): void
+    public function setTooltip(?TooltipInterface $tooltip): void
     {
         $this->tooltip = $tooltip;
     }
