@@ -16,6 +16,11 @@ class Layer extends AbstractLayer
     protected $attribution;
 
     /**
+     * @var string
+     */
+    protected $url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+    /**
      * Get the attribution
      *
      * @return string|null

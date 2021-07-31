@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MapUx\Model\Leaflet;
 
 use MapUx\Model\AbstractMap;
+use MapUx\Model\Leaflet\Layer as LeafletLayer;
 
 /**
  * @final
@@ -26,16 +27,16 @@ class Map extends AbstractMap
     public function createView(): array
     {
         return [
-            $this->getCenter(),
-            $this->getZoom(),
+            'center' => $this->getCenter(),
+            'zoom'   => $this->getZoom(),
         ];
     }
 
     public function createBackground(): array
     {
         return [
-            $this->getBackground()->getUrl(),
-            $this->getBackgroundOptions()
+            'url'     => $this->getBackground()->getUrl(),
+            'options' => $this->getBackgroundOptions()
         ];
     }
 
@@ -45,22 +46,24 @@ class Map extends AbstractMap
     public function getCenter(): array
     {
         return [
-            'lat' => $this->getLatitude(),
-            'lon' => $this->getLongitude(),
+            'latitude'  => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
         ];
     }
 
     public function getBackgroundOptions(): array
     {
-        $options = [
-            'maxZoom' => $this->getBackground()->getMaxZoom()
-        ];
+        if(null !== $this->getBackground()->getMaxZoom()) {
+            $options = [
+                'maxZoom' => $this->getBackground()->getMaxZoom()
+            ];
+        }
 
         if (null !== $this->getBackground()->getAttribution()) {
             $options['attribution'] = $this->getBackground()->getAttribution();
         }
 
-        return $options;
+        return $options ?? [];
     }
 
     /**
@@ -80,6 +83,15 @@ class Map extends AbstractMap
      */
     public function setBackground($background): void
     {
+        $this->background = $background;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultBackground(): void
+    {
+        $background = new LeafletLayer();
         $this->background = $background;
     }
 }

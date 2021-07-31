@@ -69,9 +69,9 @@ var _default = /*#__PURE__*/function (_Controller) {
       return new _mapboxGl["default"].Map({
         container: this.element,
         // container
-        style: background[0],
+        style: background.url,
         // style URL
-        center: view.center,
+        center: [view.center.longitude, view.center.latitude],
         // starting position [lng, lat]
         zoom: view.zoom // starting zoom
 
