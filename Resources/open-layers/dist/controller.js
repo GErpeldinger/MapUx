@@ -19,7 +19,7 @@ var geom = _interopRequireWildcard(require("ol/geom"));
 
 var proj = _interopRequireWildcard(require("ol/proj"));
 
-var MapFunctions = _interopRequireWildcard(require("./MapFunctions"));
+var functions = _interopRequireWildcard(require("./functions"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -63,20 +63,24 @@ var _default = /*#__PURE__*/function (_Controller) {
 
       if (map) {
         this.addMarkerTo(map);
-        MapFunctions.throwMapEvent(map);
+        functions.throwMapEvent(map);
       }
     }
   }, {
     key: "createSource",
     value: function createSource(layerSource) {
+      var layer;
+
       switch (layerSource) {
         case 'OSM':
-          return new source.OSM();
+          layer = new source.OSM();
           break;
 
         default:
-          return new source.XYZ();
+          layer = new source.XYZ();
       }
+
+      return layer;
     }
   }, {
     key: "createMap",

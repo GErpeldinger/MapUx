@@ -20,5 +20,5 @@ interface MapBuilderInterface
      *
      * @return MapInterface
      */
-    public function createMap(float $latitude, float $longitude, int $zoom);
+    public function createMap(float $latitude, float $longitude, int $zoom): MapInterface;
 }

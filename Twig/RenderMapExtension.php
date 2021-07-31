@@ -15,6 +15,9 @@ use function twig_escape_filter;
 
 class RenderMapExtension extends AbstractExtension
 {
+    /**
+     * @inheritDoc
+     */
     public function getFunctions(): array
     {
         return [
@@ -37,12 +40,12 @@ class RenderMapExtension extends AbstractExtension
      */
     public function renderMap(Environment $env, MapInterface $map, ?array $attributes = null): string
     {
-        $view       = twig_escape_filter($env, json_encode($map->createView()), 'html_attr');
-        $background = twig_escape_filter($env, json_encode($map->createBackground()), 'html_attr');
-        $markers    = twig_escape_filter($env, json_encode($map->getMarkersForMap()), 'html_attr');
+        $view       = twig_escape_filter($env, json_encode($map->createDataView()), 'html_attr');
+        $background = twig_escape_filter($env, json_encode($map->createDataBackground()), 'html_attr');
+        $markers    = twig_escape_filter($env, json_encode($map->createDataMarkers()), 'html_attr');
 
         $html = '<div 
-            data-controller="' . $map->getController() . '" 
+            data-controller="' . $map->getStimulusController() . '" 
             data-background="' . $background . '" 
             data-view="' . $view . '"';
 

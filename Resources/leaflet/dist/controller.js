@@ -11,13 +11,13 @@ var _stimulus = require("stimulus");
 
 var L = _interopRequireWildcard(require("leaflet"));
 
+var MapFunctions = _interopRequireWildcard(require("./functions.js"));
+
 var _markerIcon = _interopRequireDefault(require("leaflet/dist/images/marker-icon.png"));
 
 var _markerIcon2x = _interopRequireDefault(require("leaflet/dist/images/marker-icon-2x.png"));
 
 var _markerShadow = _interopRequireDefault(require("leaflet/dist/images/marker-shadow.png"));
-
-var MapFunctions = _interopRequireWildcard(require("./MapFunctions.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -79,16 +79,23 @@ var _default = /*#__PURE__*/function (_Controller) {
   }, {
     key: "addMarkersTo",
     value: function addMarkersTo(map) {
+      var _this = this;
+
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
           var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
 
           if (marker.tooltip) {
-            leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options);
+            _this.addTooltipToMarker(leafletMarker, marker);
           }
         });
       }
+    }
+  }, {
+    key: "addTooltipToMarker",
+    value: function addTooltipToMarker(leafletMarker, marker) {
+      leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options);
     }
     /**
      * for some obscure reason, when we use Webpack, we have to redefine the icons :/

@@ -8,11 +8,12 @@ namespace MapUx\Model;
  * @experimental
  *
  * @property string $controller
- * @property LayerInterface $background
+ * @property LayerInterface|null $background
+ * @property LayerInterface[]|null $layers
+ * @property MarkerInterface[]|null $markers
  * @property float $latitude
  * @property float $longitude
  * @property int $zoom
- * @property MarkerInterface[]|null $markers
  */
 interface MapInterface
 {
@@ -30,7 +31,7 @@ interface MapInterface
      *
      * @return string
      */
-    public function getController(): string;
+    public function getStimulusController(): string;
 
     /**
      * Set name of the stimulus controller
@@ -38,26 +39,40 @@ interface MapInterface
      *
      * @param string $controller
      */
-    public function setController(string $controller): void;
+    public function setStimulusController(string $controller): void;
 
     /**
-     * Create the view that will be given to the controller
+     * Create the data that will be sent to the data-attribute View
      *
      * @return array eg. [center, zoom]
      */
-    public function createView(): array;
+    public function createDataView(): array;
 
     /**
-     * Create the background layer that will be given to the controller
+     * Create the data that will be sent to the data-attribute Background
      *
-     * @return array eg. [url, maxZoom, attribution]
+     * @return array|null eg. [url, maxZoom, attribution]
      */
-    public function createBackground(): ?array;
+    public function createDataBackground(): ?array;
+
+    /**
+     * Create the data that will be sent to the data-attribute Layers
+     *
+     * @return array|null eg. [Layer1, Layer2...]
+     */
+    public function createDataLayers(): ?array;
+
+    /**
+     * Create the data that will be sent to the data-attribute Markers
+     *
+     * @return array|null eg. [Marker1, Marker2...]
+     */
+    public function createDataMarkers(): ?array;
 
     /**
      * Get the center of the map
      *
-     * @return float[] [latitude, longitude] || [longitude, latitude]
+     * @return float[] [latitude, longitude]
      */
     public function getCenter(): array;
 
@@ -67,14 +82,14 @@ interface MapInterface
      *
      * @return LayerInterface
      */
-    public function getBackground();
+    public function getBackground(): LayerInterface;
 
     /**
      * Set the background tile
      *
      * @param LayerInterface $background
      */
-    public function setBackground($background): void;
+    public function setBackground(LayerInterface $background): void;
 
     /**
      * Get the latitude
@@ -119,11 +134,25 @@ interface MapInterface
     public function setZoom(int $zoom): void;
 
     /**
-     * Add marker to the map
+     * Get all the layers
      *
-     * @param MarkerInterface|null $marker
+     * @return LayerInterface[]
      */
-    public function addMarker($marker): void;
+    public function getLayers(): ?array;
+
+    /**
+     * Set a array of Layer
+     *
+     * @param LayerInterface[]|null $layers
+     */
+    public function setLayers(?array $layers): void;
+
+    /**
+     * Add layer to the map
+     *
+     * @param LayerInterface|null $layer
+     */
+    public function addLayer(LayerInterface $layer): void;
 
     /**
      * Get all the markers
@@ -140,9 +169,9 @@ interface MapInterface
     public function setMarkers(?array $markers): void;
 
     /**
-     * Get all the markers attributes in order to render them
+     * Add marker to the map
      *
-     * @return array
+     * @param MarkerInterface|null $marker
      */
-    public function getMarkersForMap(): ?array;
+    public function addMarker(MarkerInterface $marker): void;
 }
