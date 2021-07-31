@@ -34,10 +34,14 @@ export default class extends Controller {
             markersList.forEach(marker => {
                 const leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
                 if(marker.tooltip) {
-                    leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options)
+                    this.addTooltipToMarker(leafletMarker)
                 }
             })
         }
+    }
+
+    addTooltipToMarker(marker) {
+        marker.bindTooltip(marker.tooltip.content, marker.tooltip.options)
     }
 
     /**

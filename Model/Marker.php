@@ -85,6 +85,4 @@ class Marker implements MarkerInterface
     {
         $this->tooltip = $tooltip;
     }
-
-
 }
