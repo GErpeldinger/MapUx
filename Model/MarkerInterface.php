@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MapUx\Model;
 
 /**
@@ -7,6 +9,7 @@ namespace MapUx\Model;
  *
  * @property float $latitude
  * @property float $longitude
+ * @property TooltipInterface|null $tooltip
  */
 interface MarkerInterface
 {
@@ -52,4 +55,18 @@ interface MarkerInterface
      * @param float $longitude
      */
     public function setLongitude(float $longitude): void;
+
+    /**
+     * Get the marker tooltip
+     *
+     * @return TooltipInterface|null $tooltip
+     */
+    public function getTooltip(): ?TooltipInterface;
+
+    /**
+     * Set a tooltip to the marker
+     *
+     * @param TooltipInterface|null $tooltip
+     */
+    public function setTooltip(?TooltipInterface $tooltip): void;
 }

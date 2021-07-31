@@ -8,9 +8,7 @@ namespace MapUx\Model;
  * @experimental
  *
  * @property string|null $url
- * @property int|null $minZoom
- * @property int|null $maxZoom
- * @property string|array|null $attribution
+ * @property array|null $options
  */
 interface LayerInterface
 {
@@ -29,44 +27,24 @@ interface LayerInterface
     public function setUrl(?string $url): void;
 
     /**
-     * Get the minimum zoom
+     * Get the options of the layer
      *
-     * @return int|null
+     * @return array|null
      */
-    public function getMinZoom(): ?int;
+    public function getOptions(): ?array;
 
     /**
-     * Set the minimum zoom
+     * Set options to the layer
      *
-     * @param int|null $minZoom
+     * @param array|null $options
      */
-    public function setMinZoom(?int $minZoom): void;
+    public function setOptions(?array $options): void;
 
     /**
-     * Get the maximum zoom
+     * Add an option to the options of the layer
      *
-     * @return int
+     * @param string $key
+     * @param mixed $value
      */
-    public function getMaxZoom(): ?int;
-
-    /**
-     * Set the maximum zoom
-     *
-     * @param int|null $maxZoom
-     */
-    public function setMaxZoom(?int $maxZoom): void;
-
-    /**
-     * Get the attribution(s)
-     *
-     * @return string|array|null
-     */
-    public function getAttribution();
-
-    /**
-     * Set the attribution(s)
-     *
-     * @param string|array|null $attribution
-     */
-    public function setAttribution($attribution): void;
+    public function addOption(string $key, $value): void;
 }

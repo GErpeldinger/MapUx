@@ -5,25 +5,28 @@ import * as source from 'ol/source';
 import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as proj from "ol/proj";
-import * as MapFunctions from "./MapFunctions";
+import * as functions from "./functions";
 
 export default class extends Controller {
     connect() {
         const map = this.createMap()
-        if(map) {
+
+        if (map) {
             this.addMarkerTo(map)
-            MapFunctions.throwMapEvent(map)
+            functions.throwMapEvent(map)
         }
     }
 
     createSource(layerSource) {
+        let layer
         switch (layerSource) {
             case 'OSM':
-                return new source.OSM()
+                layer = new source.OSM()
                 break
             default:
-                return new source.XYZ()
+                layer = new source.XYZ()
         }
+        return layer;
     }
 
     createMap() {

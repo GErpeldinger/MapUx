@@ -1,6 +1,6 @@
 import { Controller } from 'stimulus';
 import mapboxgl from 'mapbox-gl';
-import * as MapFunctions from "./MapFunctions.js";
+import * as functions from "./functions.js";
 
 
 export default class extends Controller {
@@ -9,7 +9,7 @@ export default class extends Controller {
 
         if (map) {
             this.addMarkersTo(map)
-            MapFunctions.throwMapEvent(map)
+            functions.throwMapEvent(map)
         }
     }
 

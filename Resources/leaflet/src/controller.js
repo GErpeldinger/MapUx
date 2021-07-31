@@ -1,9 +1,10 @@
 import { Controller } from 'stimulus';
 import * as L from 'leaflet';
+import * as functions from "./functions.js";
+
 import marker from 'leaflet/dist/images/marker-icon.png';
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import * as MapFunctions from "./MapFunctions.js";
 
 export default class extends Controller {
     connect() {
@@ -12,7 +13,7 @@ export default class extends Controller {
         const map = this.createMap()
         if(map) {
             this.addMarkersTo(map)
-            MapFunctions.throwMapEvent(map)
+            functions.throwMapEvent(map)
         }
     }
 
@@ -33,8 +34,16 @@ export default class extends Controller {
 
             markersList.forEach(marker => {
                 const leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+
+                if(marker.tooltip) {
+                    this.addTooltipToMarker(leafletMarker, marker)
+                }
             })
         }
+    }
+
+    addTooltipToMarker(leafletMarker, marker) {
+        leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options)
     }
 
     /**

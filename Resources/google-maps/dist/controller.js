@@ -27,7 +27,7 @@ var _stimulus = require("stimulus");
 
 var _jsApiLoader = require("@googlemaps/js-api-loader");
 
-var MapFunctions = _interopRequireWildcard(require("./MapFunctions.js"));
+var MapFunctions = _interopRequireWildcard(require("./functions.js"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
