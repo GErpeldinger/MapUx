@@ -9,6 +9,7 @@ use MapUx\Builder\MapBuilderInterface;
 use MapUx\Builder\Leaflet\MapBuilder as LeafletMapBuilder;
 use MapUx\Builder\OpenLayers\MapBuilder as OpenLayersMapBuilder;
 use MapUx\Builder\Mapbox\MapBuilder as MapboxMapBuilder;
+use MapUx\Builder\GoogleMaps\MapBuilder as GoogleMapBuilder;
 use MapUx\Twig\RenderMapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -24,6 +25,7 @@ class MapUxExtension extends Extension
     private const LEAFLET = 'leaflet';
     private const OPEN_LAYERS = 'open-layers';
     private const MAPBOX = 'mapbox';
+    private const GOOGLE_MAPS = 'google-maps';
 
     /** @var ContainerBuilder */
     private $container;
@@ -45,6 +47,7 @@ class MapUxExtension extends Extension
 
     /**
      * @param string $library
+     *
      * @throws Exception
      */
     private function selectMapLibrary(string $library): void
@@ -63,6 +66,11 @@ class MapUxExtension extends Extension
             case self::MAPBOX:
                 $this->container
                     ->setDefinition('mapux.builder', new Definition(MapboxMapBuilder::class))
+                    ->setPublic(false);
+                break;
+            case self::GOOGLE_MAPS:
+                $this->container
+                    ->setDefinition('mapux.builder', new Definition(GoogleMapBuilder::class))
                     ->setPublic(false);
                 break;
             default:
