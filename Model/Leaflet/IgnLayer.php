@@ -1,8 +1,8 @@
 <?php
 
-
 namespace MapUx\Model\Leaflet;
 
+use MapUx\Model\Layer;
 
 class IgnLayer extends Layer
 {
