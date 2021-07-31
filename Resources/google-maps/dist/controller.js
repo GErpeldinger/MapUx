@@ -51,7 +51,7 @@ var _default = /*#__PURE__*/function (_Controller) {
     key: "connect",
     value: function () {
       var _connect = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
-        var google, map;
+        var map;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -60,11 +60,11 @@ var _default = /*#__PURE__*/function (_Controller) {
                 return this.loadGoogleMaps();
 
               case 2:
-                google = _context.sent;
-                map = this.createMap(google);
+                this.google = _context.sent;
+                map = this.createMap();
 
                 if (map) {
-                  this.addMarkersTo(google, map);
+                  this.addMarkersTo(map);
                   MapFunctions.throwMapEvent(map);
                 }
 
@@ -92,7 +92,7 @@ var _default = /*#__PURE__*/function (_Controller) {
     }
   }, {
     key: "createMap",
-    value: function createMap(google) {
+    value: function createMap() {
       var view = JSON.parse(this.element.dataset.view);
       var options = {
         center: {
@@ -101,15 +101,17 @@ var _default = /*#__PURE__*/function (_Controller) {
         },
         zoom: view.zoom
       };
-      return new google.maps.Map(this.element, options);
+      return new this.google.maps.Map(this.element, options);
     }
   }, {
     key: "addMarkersTo",
-    value: function addMarkersTo(google, map) {
+    value: function addMarkersTo(map) {
+      var _this = this;
+
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
-          var googleMarker = new google.maps.Marker({
+          var googleMarker = new _this.google.maps.Marker({
             position: {
               lat: marker.position.latitude,
               lng: marker.position.longitude

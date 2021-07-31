@@ -4,11 +4,11 @@ import * as MapFunctions from "./MapFunctions.js";
 
 export default class extends Controller {
     async connect() {
-        const google = await this.loadGoogleMaps()
-        const map = this.createMap(google)
+        this.google = await this.loadGoogleMaps()
+        const map = this.createMap()
 
         if (map) {
-            this.addMarkersTo(google, map)
+            this.addMarkersTo(map)
             MapFunctions.throwMapEvent(map)
         }
     }
@@ -21,7 +21,7 @@ export default class extends Controller {
         return loader.load()
     }
 
-    createMap(google) {
+    createMap() {
         const view = JSON.parse(this.element.dataset.view)
 
         const options = {
@@ -32,15 +32,15 @@ export default class extends Controller {
             zoom: view.zoom
         }
 
-        return new google.maps.Map(this.element, options)
+        return new this.google.maps.Map(this.element, options)
     }
 
-    addMarkersTo(google, map) {
+    addMarkersTo(map) {
         if (this.element.dataset.markers) {
             const markersList = JSON.parse(this.element.dataset.markers)
 
             markersList.forEach(marker => {
-                const googleMarker = new google.maps.Marker({
+                const googleMarker = new this.google.maps.Marker({
                     position: {
                         lat: marker.position.latitude,
                         lng: marker.position.longitude
