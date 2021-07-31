@@ -6,6 +6,9 @@ namespace MapUx\Model\Leaflet;
 
 class IgnLayer extends Layer
 {
+    /**
+     * Array of free available resources
+     */
     const IGN_LAYERS = [
         'CADASTRALPARCELS.PARCELLAIRE_EXPRESS' => [
             'style'  => 'PCI vecteur',
@@ -29,14 +32,22 @@ class IgnLayer extends Layer
         ]
     ];
 
+    /**
+     * base URL to build url for IGN geo service resource
+     */
     const GEOSERVICE_API_LINK =
         'https://wxs.ign.fr/%s/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile' .
         '&VERSION=1.0.0&LAYER=%s&TILEMATRIXSET=PM&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&STYLE=%s&FORMAT=%s';
 
     /**
-     * @var string API KEY FOR GEOSERVICES
+     * @var string API KEY for GeoServices
      */
-    private $key = null;
+    private string $key;
+
+    /**
+     * @var array
+     */
+    private array $additionnaleResources;
 
     public function __construct()
     {
@@ -48,21 +59,39 @@ class IgnLayer extends Layer
             );
         }
         $this->key = $_ENV['MAP_TOKEN'];
+        $this->additionnaleResources = [];
     }
 
-    public function setRessource(string $layerType)
+    public function addNewResource(string $resourceName, string $style, string $format)
     {
-        if (!isset(self::IGN_LAYERS[$layerType])) {
-            throw new \Exception('This layer resource doesn\'t exist in MapUx');
+        $this->additionnaleResources[$resourceName] = [
+            'style'  => $style,
+            'format' => $format
+        ];
+    }
+
+    public function setUrl(?string $resourceName): void
+    {
+        parent::setUrl($this->generateUrl($resourceName));
+    }
+
+    private function generateUrl(string $resourceName): string
+    {
+        $availableResources = [...self::IGN_LAYERS, ...$this->additionnaleResources];
+
+        if (!isset($availableResources[$resourceName])) {
+            throw new \Exception(
+                'This layer resource doesn\'t exist in Mapux IgnLayer. Available resources are ' .
+                implode(', ', array_keys(self::IGN_LAYERS)) .
+                ' Feel free to add your own resources with the addResource() method');
         }
 
-        $this->setUrl(
+        return
             sprintf(self::GEOSERVICE_API_LINK,
                 $this->key,
-                $layerType,
-                self::IGN_LAYERS[$layerType]['style'],
-                self::IGN_LAYERS[$layerType]['format']
-            )
+                $resourceName,
+                $availableResources[$resourceName]['style'],
+                $availableResources[$resourceName]['format']
         );
     }
 }
