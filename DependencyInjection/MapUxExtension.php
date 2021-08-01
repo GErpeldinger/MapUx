@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Twig\Environment;
 
+use function class_exists;
+
 /**
  * @final
  * @experimental

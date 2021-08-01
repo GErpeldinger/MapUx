@@ -11,6 +11,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 use function json_encode;
+use function trim;
 use function twig_escape_filter;
 
 class RenderMapExtension extends AbstractExtension
