@@ -12,7 +12,7 @@ class Map implements MapInterface
     public const LEAFLET_CONTROLLER     = 'mapux--leaflet--map';
     public const OPEN_LAYERS_CONTROLLER = 'mapux--open-layers--map';
     public const MAPBOX_CONTROLLER      = 'mapux--mapbox--map';
-    public const GOOGLE_MAP_CONTROLLER  = 'mapux--google-maps--map';
+    public const GOOGLE_MAPS_CONTROLLER = 'mapux--google-maps--map';
 
     /** @var string */
     private string $controller;
@@ -88,7 +88,7 @@ class Map implements MapInterface
      */
     public function createDataLayers(): ?array
     {
-        if(null === $this->getLayers()) {
+        if (null === $this->getLayers()) {
             return [];
         }
         $layers = [];
@@ -104,7 +104,7 @@ class Map implements MapInterface
     public function createDataMarkers(): ?array
     {
         $markersPositions = [];
-        if(!$this->markers) {
+        if (!$this->markers) {
             return null;
         }
 

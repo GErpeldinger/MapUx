@@ -19,13 +19,10 @@ use Twig\Environment;
  */
 class MapUxExtension extends Extension
 {
-    private const LEAFLET     = 'leaflet';
-    private const OPEN_LAYERS = 'open-layers';
-    private const MAPBOX      = 'mapbox';
-    private const GOOGLE_MAPS = 'google-maps';
-
-    /** @var ContainerBuilder */
-    private ContainerBuilder $container;
+    public const LEAFLET     = 'leaflet';
+    public const OPEN_LAYERS = 'open-layers';
+    public const MAPBOX      = 'mapbox';
+    public const GOOGLE_MAPS = 'google-maps';
 
     /**
      * @inheritDoc
@@ -33,37 +30,19 @@ class MapUxExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $this->container = $container;
-
-        $this->selectMapLibrary($configs[0]['library']);
-
-        if (class_exists(Environment::class)) {
-            $this->addTwigExtension();
-        }
-    }
-
-    /**
-     * @param string $library
-     *
-     * @throws Exception
-     */
-    private function selectMapLibrary(string $library): void
-    {
-
-        $this->container
-            ->setDefinition('mapux.builder', new Definition(MapBuilder::class, [$library]))
+        $container
+            ->setDefinition('mapux.builder', new Definition(MapBuilder::class, [$configs[0]['library']]))
             ->setPublic(false);
 
-        $this->container
+        $container
             ->setAlias(MapBuilderInterface::class, 'mapux.builder')
             ->setPublic(false);
-    }
 
-    private function addTwigExtension(): void
-    {
-        $this->container
-            ->setDefinition('mapux.twig_extension', new Definition(RenderMapExtension::class))
-            ->addTag('twig.extension')
-            ->setPublic(false);
+        if (class_exists(Environment::class)) {
+            $container
+                ->setDefinition('mapux.twig_extension', new Definition(RenderMapExtension::class))
+                ->addTag('twig.extension')
+                ->setPublic(false);
+        }
     }
 }

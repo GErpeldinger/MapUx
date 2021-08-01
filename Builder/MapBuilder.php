@@ -2,27 +2,31 @@
 
 namespace MapUx\Builder;
 
+use MapUx\DependencyInjection\MapUxExtension;
 use MapUx\Model\Layer;
 use MapUx\Model\Map;
 
+/**
+ * @experimental
+ */
 class MapBuilder implements MapBuilderInterface
 {
-    const controllers = [
-        'google-maps'  => Map::GOOGLE_MAP_CONTROLLER,
-        'leaflet'     => Map::LEAFLET_CONTROLLER,
-        'mapbox'      => Map::MAPBOX_CONTROLLER,
-        'open-layers' => Map::OPEN_LAYERS_CONTROLLER
+    private const CONTROLLERS = [
+        MapUxExtension::GOOGLE_MAPS => Map::GOOGLE_MAPS_CONTROLLER,
+        MapUxExtension::LEAFLET     => Map::LEAFLET_CONTROLLER,
+        MapUxExtension::MAPBOX      => Map::MAPBOX_CONTROLLER,
+        MapUxExtension::OPEN_LAYERS => Map::OPEN_LAYERS_CONTROLLER
     ];
 
-    const URLS = [
-        'google-maps'  => '',
-        'leaflet'     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        'mapbox'      => 'mapbox://styles/mapbox/streets-v11',
-        'open-layers' => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    private const URLS = [
+        MapUxExtension::GOOGLE_MAPS => '',
+        MapUxExtension::LEAFLET     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        MapUxExtension::MAPBOX      => 'mapbox://styles/mapbox/streets-v11',
+        MapUxExtension::OPEN_LAYERS => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     ];
 
     /** @var string */
-    private $library;
+    private string $library;
 
     public function __construct(string $library)
     {
@@ -41,7 +45,7 @@ class MapBuilder implements MapBuilderInterface
     public function createMap(float $latitude, float $longitude, int $zoom): Map
     {
         $map = new Map($latitude, $longitude, $zoom);
-        $map->setStimulusController(self::controllers[$this->library]);
+        $map->setStimulusController(self::CONTROLLERS[$this->library]);
 
         $background = new Layer();
         $background->setUrl(self::URLS[$this->library]);
