@@ -1,5 +1,4 @@
-# MapUx
-![logo](http://frvaillant.com/mapux/logo_mapux.svg)
+![logo](http://frvaillant.com/mapux/logo_mapux_v2.svg)
 
 ## Description
 
