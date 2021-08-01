@@ -100,9 +100,7 @@ class IgnLayer extends Layer
      */
     private function generateUrl(string $resourceName): string
     {
-        $availableResources = empty($this->additionalResources)
-            ? self::IGN_LAYERS
-            : array_merge(self::IGN_LAYERS, $this->additionalResources);
+        $availableResources = array_merge(self::IGN_LAYERS, $this->additionalResources);
 
         if (!isset($availableResources[$resourceName])) {
             throw new Exception(
