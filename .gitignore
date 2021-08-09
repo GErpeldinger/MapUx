@@ -1,9 +1,9 @@
 ###> Project ###
 /vendor/
 composer.lock
-/Resources/*/node_modules
-/Resources/*/yarn.lock
-/Resources/*/yarn-error.log
+/Resources/assets/node_modules
+/Resources/assets/yarn.lock
+/Resources/assets/yarn-error.log
 ###< Project ###
 
 ###> Others ###

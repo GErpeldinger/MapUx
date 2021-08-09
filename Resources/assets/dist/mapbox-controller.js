@@ -9,10 +9,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-
-var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
-
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
@@ -25,9 +21,9 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _stimulus = require("stimulus");
 
-var _jsApiLoader = require("@googlemaps/js-api-loader");
+var _mapboxGl = _interopRequireDefault(require("mapbox-gl"));
 
-var MapFunctions = _interopRequireWildcard(require("./functions.js"));
+var functions = _interopRequireWildcard(require("./functions.js"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -49,75 +45,38 @@ var _default = /*#__PURE__*/function (_Controller) {
 
   (0, _createClass2["default"])(_default, [{
     key: "connect",
-    value: function () {
-      var _connect = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
-        var map;
-        return _regenerator["default"].wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.loadGoogleMaps();
+    value: function connect() {
+      var map = this.createMap();
 
-              case 2:
-                this.google = _context.sent;
-                map = this.createMap();
-
-                if (map) {
-                  this.addMarkersTo(map);
-                  MapFunctions.throwMapEvent(map);
-                }
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function connect() {
-        return _connect.apply(this, arguments);
+      if (map) {
+        this.addMarkersTo(map);
+        functions.throwMapEvent(map);
       }
-
-      return connect;
-    }()
-  }, {
-    key: "loadGoogleMaps",
-    value: function loadGoogleMaps() {
-      var loader = new _jsApiLoader.Loader({
-        apiKey: this.element.dataset.key
-      });
-      return loader.load();
     }
   }, {
     key: "createMap",
     value: function createMap() {
       var view = JSON.parse(this.element.dataset.view);
-      var options = {
-        center: {
-          lat: view.center.latitude,
-          lng: view.center.longitude
-        },
-        zoom: view.zoom
-      };
-      return new this.google.maps.Map(this.element, options);
+      var background = JSON.parse(this.element.dataset.background);
+      _mapboxGl["default"].accessToken = this.element.dataset.key;
+      return new _mapboxGl["default"].Map({
+        container: this.element,
+        // container
+        style: background.url,
+        // style URL
+        center: [view.center.longitude, view.center.latitude],
+        // starting position [lng, lat]
+        zoom: view.zoom // starting zoom
+
+      });
     }
   }, {
     key: "addMarkersTo",
     value: function addMarkersTo(map) {
-      var _this = this;
-
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
-          var googleMarker = new _this.google.maps.Marker({
-            position: {
-              lat: marker.position.latitude,
-              lng: marker.position.longitude
-            },
-            map: map
-          });
+          var mapboxMarker = new _mapboxGl["default"].Marker().setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
         });
       }
     }
