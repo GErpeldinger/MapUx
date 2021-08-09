@@ -21,7 +21,8 @@
     "require-dev": {
         "symfony/framework-bundle": "^4.4.27|^5.0",
         "symfony/twig-bundle": "^4.4.27|^5.0",
-        "symfony/var-dumper": "^4.4.27|^5.0"
+        "symfony/var-dumper": "^4.4.27|^5.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {

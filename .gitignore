@@ -3,7 +3,9 @@
 composer.lock
 /Resources/assets/node_modules
 /Resources/assets/yarn.lock
+/Resources/yarn.lock
 /Resources/assets/yarn-error.log
+/Resources/node_modules
 ###< Project ###
 
 ###> Others ###

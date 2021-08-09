@@ -30,8 +30,9 @@ class MapUxExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $library = $configs[0]['library'] ?? self::LEAFLET;
         $container
-            ->setDefinition('mapux.builder', new Definition(MapBuilder::class, [$configs[0]['library']]))
+            ->setDefinition('mapux.builder', new Definition(MapBuilder::class, [$library]))
             ->setPublic(false);
 
         $container
