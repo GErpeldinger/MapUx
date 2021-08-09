@@ -1,10 +1,23 @@
 <?php
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace MapUx\Tests\Kernel;
 
-
+/**
+ * @author Titouan Galopin <galopintitouan@gmail.com>
+ *
+ * @internal
+ */
 trait AppKernelTrait
 {
+
     public function getCacheDir()
     {
         return $this->createTmpDir('cache');

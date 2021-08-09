@@ -18,9 +18,16 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use MapUx\MapUxBundle;
 
+/**
+ * @author Titouan Galopin <galopintitouan@gmail.com>
+ *
+ * @internal
+ */
 class TwigAppKernel extends Kernel
 {
     use AppKernelTrait;
+
+    const NAME = 'mapux';
 
     public function registerBundles()
     {
@@ -33,8 +40,8 @@ class TwigAppKernel extends Kernel
             $container->loadFromExtension('framework', ['secret' => '$ecret', 'test' => true]);
             $container->loadFromExtension('twig', ['default_path' => __DIR__.'/templates', 'strict_variables' => true, 'exception_controller' => null]);
 
-            $container->setAlias('test.mapux.builder', 'mapux.builder')->setPublic(true);
-            $container->setAlias('test.mapux.twig_extension', 'mapux.twig_extension')->setPublic(true);
+            $container->setAlias('test.' . self::NAME . '.builder', self::NAME . '.builder')->setPublic(true);
+            $container->setAlias('test.' . self::NAME . '.twig_extension', self::NAME . '.twig_extension')->setPublic(true);
         });
     }
 }
