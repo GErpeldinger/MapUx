@@ -2,6 +2,9 @@
     "name": "gerpeldinger/mapux",
     "description": "MapUx is a bundle for symfony, its goal is to help you to add maps easily in your project.",
     "type": "symfony-bundle",
+    "keywords": [
+        "symfony-ux"
+    ],
     "authors": [
         {
             "name": "Francois Vaillant",
