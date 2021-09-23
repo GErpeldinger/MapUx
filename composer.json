@@ -5,6 +5,7 @@
     "keywords": [
         "symfony-ux"
     ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Francois Vaillant",
