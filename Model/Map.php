@@ -9,10 +9,10 @@ namespace MapUx\Model;
  */
 class Map implements MapInterface
 {
-    public const LEAFLET_CONTROLLER     = 'mapux--mapux--leaflet';
-    public const OPEN_LAYERS_CONTROLLER = 'mapux--mapux--open-layers';
-    public const MAPBOX_CONTROLLER      = 'mapux--mapux--mapbox';
-    public const GOOGLE_MAPS_CONTROLLER = 'mapux--mapux--google-maps';
+    public const LEAFLET_CONTROLLER     = 'gerpeldinger--mapux--leaflet';
+    public const OPEN_LAYERS_CONTROLLER = 'gerpeldinger--mapux--open-layers';
+    public const MAPBOX_CONTROLLER      = 'gerpeldinger--mapux--mapbox';
+    public const GOOGLE_MAPS_CONTROLLER = 'gerpeldinger--mapux--google-maps';
 
     /** @var string */
     private string $controller;
