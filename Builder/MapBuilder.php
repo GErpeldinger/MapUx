@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MapUx\Builder;
 
+use MapUx\Builder\Leaflet\MapBuilderInterface as LeafletMapBuilderInterface;
+use MapUx\Builder\GoogleMaps\MapBuilderInterface as GoogleMapsMapBuilderInterface;
+use MapUx\Builder\OpenLayers\MapBuilderInterface as OpenLayersMapBuilderInterface;
+use MapUx\Builder\MapBox\MapBuilderInterface as MapBoxMapBuilderInterface;
 use MapUx\DependencyInjection\MapUxExtension;
 use MapUx\Model\Layer;
 use MapUx\Model\Map;
@@ -9,7 +15,11 @@ use MapUx\Model\Map;
 /**
  * @experimental
  */
-class MapBuilder implements MapBuilderInterface
+class MapBuilder implements
+    LeafletMapBuilderInterface,
+    GoogleMapsMapBuilderInterface,
+    OpenLayersMapBuilderInterface,
+    MapBoxMapBuilderInterface
 {
     private const CONTROLLERS = [
         MapUxExtension::GOOGLE_MAPS => Map::GOOGLE_MAPS_CONTROLLER,

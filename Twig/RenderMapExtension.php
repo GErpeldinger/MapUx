@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MapUx\Twig;
 
+use MapUx\Exception\NotDefinedTokenException;
 use MapUx\Model\MapInterface;
 use Twig\Environment;
 use Twig\Error\RuntimeError;
@@ -37,7 +38,7 @@ class RenderMapExtension extends AbstractExtension
      *
      * @return string
      *
-     * @throws RuntimeError
+     * @throws RuntimeError|NotDefinedTokenException
      */
     public function renderMap(Environment $env, MapInterface $map, ?array $attributes = null): string
     {
@@ -50,9 +51,7 @@ class RenderMapExtension extends AbstractExtension
             data-background="' . $background . '" 
             data-view="' . $view . '"';
 
-        if (isset($_ENV['MAP_TOKEN'])) {
-            $html .= ' data-key="' . $_ENV['MAP_TOKEN'] . '"';
-        }
+        $html = $this->checkToken($map, $html);
 
         if ($map->getMarkers()) {
             $html .= ' data-markers="' . $markers . '"';
@@ -67,5 +66,29 @@ class RenderMapExtension extends AbstractExtension
         $html .= '></div>';
 
         return trim($html);
+    }
+
+    /**
+     * @throws NotDefinedTokenException
+     */
+    private function checkToken(MapInterface $map, string $html): string
+    {
+        if (false !== strpos($map->getStimulusController(), 'google-maps')) {
+            if (isset($_ENV['GOOGLE_MAPS_TOKEN'])) {
+                $html .= ' data-key="' . $_ENV['GOOGLE_MAPS_TOKEN'] . '"';
+            } else {
+                throw new NotDefinedTokenException('GOOGLE_MAPS_TOKEN');
+            }
+        }
+
+        if (false !== strpos($map->getStimulusController(), 'mapbox')) {
+            if (isset($_ENV['MAP_BOX_TOKEN'])) {
+                $html .= ' data-key="' . $_ENV['MAP_BOX_TOKEN'] . '"';
+            } else {
+                throw new NotDefinedTokenException('MAP_BOX_TOKEN');
+            }
+        }
+
+        return $html;
     }
 }
