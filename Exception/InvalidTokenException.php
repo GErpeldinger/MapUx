@@ -7,7 +7,7 @@ namespace MapUx\Exception;
 use Exception;
 use Throwable;
 
-class InvalidTokenException extends Exception
+class NotDefinedTokenException extends Exception
 {
     public function __construct(string $envVariable, int $code = 0, Throwable $previous = null)
     {

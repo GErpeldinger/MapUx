@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MapUx\Twig;
 
-use MapUx\Exception\InvalidTokenException;
+use MapUx\Exception\NotDefinedTokenException;
 use MapUx\Model\MapInterface;
 use Twig\Environment;
 use Twig\Error\RuntimeError;
@@ -38,7 +38,7 @@ class RenderMapExtension extends AbstractExtension
      *
      * @return string
      *
-     * @throws RuntimeError|InvalidTokenException
+     * @throws RuntimeError|NotDefinedTokenException
      */
     public function renderMap(Environment $env, MapInterface $map, ?array $attributes = null): string
     {
@@ -69,7 +69,7 @@ class RenderMapExtension extends AbstractExtension
     }
 
     /**
-     * @throws InvalidTokenException
+     * @throws NotDefinedTokenException
      */
     private function checkToken(MapInterface $map, string $html): string
     {
@@ -77,7 +77,7 @@ class RenderMapExtension extends AbstractExtension
             if (isset($_ENV['GOOGLE_MAPS_TOKEN'])) {
                 $html .= ' data-key="' . $_ENV['GOOGLE_MAPS_TOKEN'] . '"';
             } else {
-                throw new InvalidTokenException('GOOGLE_MAPS_TOKEN');
+                throw new NotDefinedTokenException('GOOGLE_MAPS_TOKEN');
             }
         }
 
@@ -85,7 +85,7 @@ class RenderMapExtension extends AbstractExtension
             if (isset($_ENV['MAP_BOX_TOKEN'])) {
                 $html .= ' data-key="' . $_ENV['MAP_BOX_TOKEN'] . '"';
             } else {
-                throw new InvalidTokenException('MAP_BOX_TOKEN');
+                throw new NotDefinedTokenException('MAP_BOX_TOKEN');
             }
         }
 
