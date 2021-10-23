@@ -112,7 +112,6 @@ var _default = /*#__PURE__*/function (_Controller) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
           if (marker.icon) {
-            console.log(marker.icon);
             var googleMarker = new _this.google.maps.Marker({
               position: {
                 lat: marker.position.latitude,

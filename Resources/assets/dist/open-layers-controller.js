@@ -33,6 +33,8 @@ var proj = _interopRequireWildcard(require("ol/proj"));
 
 var functions = _interopRequireWildcard(require("./functions"));
 
+var _style = require("ol/style");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -103,9 +105,18 @@ var _default = /*#__PURE__*/function (_Controller) {
         var markersList = JSON.parse(this.element.dataset.markers);
         var markers = [];
         markersList.forEach(function (marker) {
-          markers.push(new ol.Feature({
+          var openLayersMarker = new ol.Feature({
             geometry: new geom.Point(proj.fromLonLat([marker.position.longitude, marker.position.latitude]))
-          }));
+          });
+
+          if (marker.icon) {
+            var icon = new _style.Style({
+              image: new _style.Icon(marker.icon.parameters)
+            });
+            openLayersMarker.setStyle(icon);
+          }
+
+          markers.push(openLayersMarker);
         });
         var markersLayer = new layer.Vector({
           source: new source.Vector({

@@ -6,6 +6,7 @@ import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as proj from "ol/proj";
 import * as functions from "./functions";
+import {Icon, Style} from "ol/style";
 
 export default class extends Controller {
     connect() {
@@ -56,11 +57,21 @@ export default class extends Controller {
 
             const markers = []
             markersList.forEach(marker => {
-                markers.push(new ol.Feature({
-                    geometry: new geom.Point(
+
+                const openLayersMarker = new ol.Feature({
+                        geometry: new geom.Point(
                         proj.fromLonLat([marker.position.longitude, marker.position.latitude])
                     )
-                }));
+                })
+
+                if(marker.icon) {
+                    const icon = new Style({
+                        image: new Icon(marker.icon.parameters)
+                    })
+                    openLayersMarker.setStyle(icon)
+                }
+
+                markers.push(openLayersMarker);
             })
 
             const markersLayer = new layer.Vector({
