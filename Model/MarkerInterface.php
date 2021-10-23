@@ -69,4 +69,11 @@ interface MarkerInterface
      * @param TooltipInterface|null $tooltip
      */
     public function setTooltip(?TooltipInterface $tooltip): void;
+
+    /**
+     * Personalize Icon with png picture
+     *
+     * @param Icon $icon
+     */
+    public function setIcon(Icon $icon): void;
 }

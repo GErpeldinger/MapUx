@@ -33,11 +33,20 @@ export default class extends Controller {
             const markersList = JSON.parse(this.element.dataset.markers)
 
             markersList.forEach(marker => {
-                const leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+
+                const leafletMarker = L.marker([marker.position.latitude, marker.position.longitude])
+                if(marker.icon) {
+                    const icon = L.icon(marker.icon.parameters)
+                    leafletMarker.setIcon(icon)
+                }
+                leafletMarker.addTo(map);
+
 
                 if(marker.tooltip) {
                     this.addTooltipToMarker(leafletMarker, marker)
                 }
+
+
             })
         }
     }

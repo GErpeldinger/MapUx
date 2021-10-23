@@ -77,7 +77,14 @@ var _default = /*#__PURE__*/function (_Controller) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
-          var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]).addTo(map);
+          var leafletMarker = L.marker([marker.position.latitude, marker.position.longitude]);
+
+          if (marker.icon) {
+            var icon = L.icon(marker.icon.parameters);
+            leafletMarker.setIcon(icon);
+          }
+
+          leafletMarker.addTo(map);
 
           if (marker.tooltip) {
             _this.addTooltipToMarker(leafletMarker, marker);
