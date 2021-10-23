@@ -111,13 +111,25 @@ var _default = /*#__PURE__*/function (_Controller) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
-          var googleMarker = new _this.google.maps.Marker({
-            position: {
-              lat: marker.position.latitude,
-              lng: marker.position.longitude
-            },
-            map: map
-          });
+          if (marker.icon) {
+            console.log(marker.icon);
+            var googleMarker = new _this.google.maps.Marker({
+              position: {
+                lat: marker.position.latitude,
+                lng: marker.position.longitude
+              },
+              map: map,
+              icon: marker.icon.parameters.iconUrl
+            });
+          } else {
+            var _googleMarker = new _this.google.maps.Marker({
+              position: {
+                lat: marker.position.latitude,
+                lng: marker.position.longitude
+              },
+              map: map
+            });
+          }
         });
       }
     }

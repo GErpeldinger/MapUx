@@ -76,4 +76,12 @@ interface MarkerInterface
      * @param Icon $icon
      */
     public function setIcon(Icon $icon): void;
+
+    /**
+     * Get The icon
+     *
+     * @return Icon|null
+     */
+    public function getIcon(): ?Icon;
+
 }

@@ -40,13 +40,25 @@ export default class extends Controller {
             const markersList = JSON.parse(this.element.dataset.markers)
 
             markersList.forEach(marker => {
-                const googleMarker = new this.google.maps.Marker({
-                    position: {
-                        lat: marker.position.latitude,
-                        lng: marker.position.longitude
-                    },
-                    map: map,
-                });
+
+                if(marker.icon) {
+                    const googleMarker = new this.google.maps.Marker({
+                        position: {
+                            lat: marker.position.latitude,
+                            lng: marker.position.longitude
+                        },
+                        map: map,
+                        icon: marker.icon.parameters.iconUrl
+                    });
+                } else {
+                    const googleMarker = new this.google.maps.Marker({
+                        position: {
+                            lat: marker.position.latitude,
+                            lng: marker.position.longitude
+                        },
+                        map: map,
+                    });
+                }
             })
         }
     }

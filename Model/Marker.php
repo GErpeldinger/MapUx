@@ -18,6 +18,10 @@ class Marker implements MarkerInterface
     /** @var TooltipInterface|null */
     private ?TooltipInterface $tooltip = null;
 
+    /** @var Icon|null */
+    private ?Icon $icon = null;
+
+
     /**
      * @inheritDoc
      */
@@ -84,5 +88,15 @@ class Marker implements MarkerInterface
     public function setTooltip(?TooltipInterface $tooltip): void
     {
         $this->tooltip = $tooltip;
+    }
+
+    public function setIcon(Icon $icon): void
+    {
+        $this->icon = $icon;
+    }
+
+    public function getIcon(): ?Icon
+    {
+        return $this->icon;
     }
 }
