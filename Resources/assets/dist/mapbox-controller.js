@@ -76,7 +76,15 @@ var _default = /*#__PURE__*/function (_Controller) {
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
-          var mapboxMarker = new _mapboxGl["default"].Marker().setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
+          var mapboxMarker = new _mapboxGl["default"].Marker();
+
+          if (marker.icon) {
+            var el = document.createElement('div');
+            el.className = marker.icon.parameters.className;
+            mapboxMarker = new _mapboxGl["default"].Marker(el);
+          }
+
+          mapboxMarker.setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
         });
       }
     }

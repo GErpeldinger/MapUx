@@ -34,7 +34,15 @@ export default class extends Controller {
             const markersList = JSON.parse(this.element.dataset.markers)
 
             markersList.forEach(marker => {
-                const mapboxMarker = new mapboxgl.Marker()
+                let mapboxMarker = new mapboxgl.Marker();
+
+                if(marker.icon) {
+                    const el = document.createElement('div');
+                    el.className = marker.icon.parameters.className
+                     mapboxMarker = new mapboxgl.Marker(el);
+                }
+
+                mapboxMarker
                     .setLngLat([marker.position.longitude, marker.position.latitude])
                     .addTo(map);
             })
