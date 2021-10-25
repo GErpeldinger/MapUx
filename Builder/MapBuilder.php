@@ -25,10 +25,26 @@ class MapBuilder implements
     /** @var string */
     private string $library;
 
-    public function __construct(string $library)
+    public function __construct()
+    {
+    }
+
+    /**
+     * @return string
+     */
+    public function getLibrary(): ?string
+    {
+        return $this->library;
+    }
+
+    /**
+     * @param string $library
+     */
+    public function setLibrary(string $library): void
     {
         $this->library = $library;
     }
+
 
     /**
      * Create a Map
