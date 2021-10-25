@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace MapUx\Builder;
 
-use MapUx\Builder\Leaflet\MapBuilderInterface as LeafletMapBuilderInterface;
-use MapUx\Builder\GoogleMaps\MapBuilderInterface as GoogleMapsMapBuilderInterface;
-use MapUx\Builder\OpenLayers\MapBuilderInterface as OpenLayersMapBuilderInterface;
-use MapUx\Builder\MapBox\MapBuilderInterface as MapBoxMapBuilderInterface;
 use MapUx\DependencyInjection\MapUxExtension;
 use MapUx\Model\Layer;
 use MapUx\Model\Map;
@@ -16,23 +12,14 @@ use MapUx\Model\Map;
  * @experimental
  */
 class MapBuilder implements
-    LeafletMapBuilderInterface,
-    GoogleMapsMapBuilderInterface,
-    OpenLayersMapBuilderInterface,
-    MapBoxMapBuilderInterface
+    MapBuilderInterface
 {
-    private const CONTROLLERS = [
-        MapUxExtension::GOOGLE_MAPS => Map::GOOGLE_MAPS_CONTROLLER,
-        MapUxExtension::LEAFLET     => Map::LEAFLET_CONTROLLER,
-        MapUxExtension::MAPBOX      => Map::MAPBOX_CONTROLLER,
-        MapUxExtension::OPEN_LAYERS => Map::OPEN_LAYERS_CONTROLLER
-    ];
 
     private const URLS = [
-        MapUxExtension::GOOGLE_MAPS => '',
-        MapUxExtension::LEAFLET     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        MapUxExtension::MAPBOX      => 'mapbox://styles/mapbox/streets-v11',
-        MapUxExtension::OPEN_LAYERS => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        'google' => '',
+        'leaflet'     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'mapbox'      => 'mapbox://styles/mapbox/streets-v11',
+        'openLayers' => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     ];
 
     /** @var string */
@@ -54,12 +41,12 @@ class MapBuilder implements
      */
     public function createMap(float $latitude, float $longitude, int $zoom): Map
     {
-        $map = new Map($latitude, $longitude, $zoom);
-        $map->setStimulusController(self::CONTROLLERS[$this->library]);
+        $className = 'MapUx\Model\\' . ucfirst($this->library) . 'Map';
+        $map = new $className($latitude, $longitude, $zoom);
+
 
         $background = new Layer();
         $background->setUrl(self::URLS[$this->library]);
-
         $map->setBackground($background);
 
         return $map;

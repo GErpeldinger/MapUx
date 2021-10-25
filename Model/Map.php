@@ -9,13 +9,6 @@ namespace MapUx\Model;
  */
 class Map implements MapInterface
 {
-    public const LEAFLET_CONTROLLER     = 'gerpeldinger--mapux--leaflet';
-    public const OPEN_LAYERS_CONTROLLER = 'gerpeldinger--mapux--open-layers';
-    public const MAPBOX_CONTROLLER      = 'gerpeldinger--mapux--mapbox';
-    public const GOOGLE_MAPS_CONTROLLER = 'gerpeldinger--mapux--google-maps';
-
-    /** @var string */
-    private string $controller;
 
     /** @var LayerInterface|null */
     private ?LayerInterface $background = null;
@@ -40,10 +33,12 @@ class Map implements MapInterface
      */
     public function __construct(float $latitude, float $longitude, int $zoom)
     {
+        $this->class = new \ReflectionClass($this);
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->zoom = $zoom;
     }
+
 
     /**
      * @inheritDoc
