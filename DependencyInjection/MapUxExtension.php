@@ -10,6 +10,7 @@ use MapUx\Builder\Leaflet\MapBuilderInterface as LeafletMapBuilderInterface;
 use MapUx\Builder\MapBox\MapBuilderInterface as MapBoxMapBuilderInterface;
 use MapUx\Builder\MapBuilder;
 use MapUx\Builder\OpenLayers\MapBuilderInterface as OpenLayersMapBuilderInterface;
+use MapUx\Model\Map;
 use MapUx\Twig\RenderMapExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -22,16 +23,11 @@ use Twig\Environment;
  */
 class MapUxExtension extends Extension
 {
-    public const LEAFLET     = 'leaflet';
-    public const OPEN_LAYERS = 'open-layers';
-    public const MAPBOX      = 'mapbox';
-    public const GOOGLE_MAPS = 'google-maps';
-
     private const LIBRARIES = [
-        self::LEAFLET     => LeafletMapBuilderInterface::class,
-        self::OPEN_LAYERS => OpenLayersMapBuilderInterface::class,
-        self::MAPBOX      => MapBoxMapBuilderInterface::class,
-        self::GOOGLE_MAPS => GoogleMapsMapBuilderInterface::class
+        Map::LEAFLET     => LeafletMapBuilderInterface::class,
+        Map::OPEN_LAYERS => OpenLayersMapBuilderInterface::class,
+        Map::MAPBOX      => MapBoxMapBuilderInterface::class,
+        Map::GOOGLE_MAPS => GoogleMapsMapBuilderInterface::class
     ];
 
     /**

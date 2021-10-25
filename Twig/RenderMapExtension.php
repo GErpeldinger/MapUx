@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MapUx\Twig;
 
 use MapUx\Exception\NotDefinedTokenException;
+use MapUx\Model\Map;
 use MapUx\Model\MapInterface;
 use Twig\Environment;
 use Twig\Error\RuntimeError;
@@ -73,7 +74,7 @@ class RenderMapExtension extends AbstractExtension
      */
     private function checkToken(MapInterface $map, string $html): string
     {
-        if (false !== strpos($map->getStimulusController(), 'google-maps')) {
+        if ($map->getLibrary() === Map::GOOGLE_MAPS) {
             if (isset($_ENV['GOOGLE_MAPS_TOKEN'])) {
                 $html .= ' data-key="' . $_ENV['GOOGLE_MAPS_TOKEN'] . '"';
             } else {
@@ -81,11 +82,11 @@ class RenderMapExtension extends AbstractExtension
             }
         }
 
-        if (false !== strpos($map->getStimulusController(), 'mapbox')) {
-            if (isset($_ENV['MAP_BOX_TOKEN'])) {
-                $html .= ' data-key="' . $_ENV['MAP_BOX_TOKEN'] . '"';
+        if ($map->getLibrary() === Map::MAPBOX) {
+            if (isset($_ENV['MAPBOX_TOKEN'])) {
+                $html .= ' data-key="' . $_ENV['MAPBOX_TOKEN'] . '"';
             } else {
-                throw new NotDefinedTokenException('MAP_BOX_TOKEN');
+                throw new NotDefinedTokenException('MAPBOX_TOKEN');
             }
         }
 

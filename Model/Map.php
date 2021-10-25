@@ -4,15 +4,26 @@ declare(strict_types=1);
 
 namespace MapUx\Model;
 
+use MapUx\Exception\InvalidLibraryException;
+
+use function in_array;
+
 /**
  * @experimental
  */
 class Map implements MapInterface
 {
+    public const LEAFLET     = 'leaflet';
+    public const OPEN_LAYERS = 'open-layers';
+    public const MAPBOX      = 'mapbox';
+    public const GOOGLE_MAPS = 'google-maps';
+
     public const LEAFLET_CONTROLLER     = 'gerpeldinger--mapux--leaflet';
     public const OPEN_LAYERS_CONTROLLER = 'gerpeldinger--mapux--open-layers';
     public const MAPBOX_CONTROLLER      = 'gerpeldinger--mapux--mapbox';
     public const GOOGLE_MAPS_CONTROLLER = 'gerpeldinger--mapux--google-maps';
+
+    private string $library;
 
     /** @var string */
     private string $controller;
@@ -43,6 +54,28 @@ class Map implements MapInterface
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->zoom = $zoom;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLibrary(): string
+    {
+        return $this->library;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @throws InvalidLibraryException
+     */
+    public function setLibrary(string $library): void
+    {
+        if (!in_array($library, [self::LEAFLET, self::OPEN_LAYERS, self::MAPBOX, self::GOOGLE_MAPS])) {
+            throw new InvalidLibraryException($library);
+        }
+
+        $this->library = $library;
     }
 
     /**

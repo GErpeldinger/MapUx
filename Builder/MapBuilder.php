@@ -8,7 +8,7 @@ use MapUx\Builder\Leaflet\MapBuilderInterface as LeafletMapBuilderInterface;
 use MapUx\Builder\GoogleMaps\MapBuilderInterface as GoogleMapsMapBuilderInterface;
 use MapUx\Builder\OpenLayers\MapBuilderInterface as OpenLayersMapBuilderInterface;
 use MapUx\Builder\MapBox\MapBuilderInterface as MapBoxMapBuilderInterface;
-use MapUx\DependencyInjection\MapUxExtension;
+use MapUx\Exception\InvalidLibraryException;
 use MapUx\Model\Layer;
 use MapUx\Model\Map;
 
@@ -22,17 +22,17 @@ class MapBuilder implements
     MapBoxMapBuilderInterface
 {
     private const CONTROLLERS = [
-        MapUxExtension::GOOGLE_MAPS => Map::GOOGLE_MAPS_CONTROLLER,
-        MapUxExtension::LEAFLET     => Map::LEAFLET_CONTROLLER,
-        MapUxExtension::MAPBOX      => Map::MAPBOX_CONTROLLER,
-        MapUxExtension::OPEN_LAYERS => Map::OPEN_LAYERS_CONTROLLER
+        Map::GOOGLE_MAPS => Map::GOOGLE_MAPS_CONTROLLER,
+        Map::LEAFLET     => Map::LEAFLET_CONTROLLER,
+        Map::MAPBOX      => Map::MAPBOX_CONTROLLER,
+        Map::OPEN_LAYERS => Map::OPEN_LAYERS_CONTROLLER
     ];
 
     private const URLS = [
-        MapUxExtension::GOOGLE_MAPS => '',
-        MapUxExtension::LEAFLET     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        MapUxExtension::MAPBOX      => 'mapbox://styles/mapbox/streets-v11',
-        MapUxExtension::OPEN_LAYERS => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        Map::GOOGLE_MAPS => '',
+        Map::LEAFLET     => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        Map::MAPBOX      => 'mapbox://styles/mapbox/streets-v11',
+        Map::OPEN_LAYERS => 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     ];
 
     /** @var string */
@@ -51,10 +51,13 @@ class MapBuilder implements
      * @param int $zoom
      *
      * @return Map
+     *
+     * @throws InvalidLibraryException
      */
     public function createMap(float $latitude, float $longitude, int $zoom): Map
     {
         $map = new Map($latitude, $longitude, $zoom);
+        $map->setLibrary($this->library);
         $map->setStimulusController(self::CONTROLLERS[$this->library]);
 
         $background = new Layer();

@@ -27,6 +27,23 @@ interface MapInterface
     public function __construct(float $latitude, float $longitude, int $zoom);
 
     /**
+     * Return name of the library used
+     *
+     * @return string
+     */
+    public function getLibrary(): string;
+
+    /**
+     * Set name of the library used<br>
+     * Can only take constants :
+     *  - \Map::LEAFLET     ('leaflet')
+     *  - \Map::OPEN_LAYERS ('open-layers')
+     *  - \Map::MAPBOX      ('mapbox')
+     *  - \Map::GOOGLE_MAPS ('google-maps')
+     */
+    public function setLibrary(string $library): void;
+
+    /**
      * Return name of the stimulus controller
      *
      * @return string
