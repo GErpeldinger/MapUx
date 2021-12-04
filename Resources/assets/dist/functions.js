@@ -5,9 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.throwMapEvent = throwMapEvent;
 
-function throwMapEvent(map) {
+function throwMapEvent(map, mapId) {
   var event = document.createEvent('Event');
   event.initEvent('MapIsLoaded', true, true);
   event.map = map;
+  event.mapId = mapId;
   document.dispatchEvent(event);
 }
