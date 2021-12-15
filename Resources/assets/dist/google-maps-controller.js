@@ -65,7 +65,7 @@ var _default = /*#__PURE__*/function (_Controller) {
 
                 if (map) {
                   this.addMarkersTo(map);
-                  functions.throwMapEvent(map);
+                  functions.throwMapEvent(map, this.element.id);
                 }
 
               case 5:

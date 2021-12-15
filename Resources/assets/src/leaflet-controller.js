@@ -9,11 +9,10 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 export default class extends Controller {
     connect() {
         this.redefineIcons()
-
         const map = this.createMap()
         if(map) {
             this.addMarkersTo(map)
-            functions.throwMapEvent(map)
+            functions.throwMapEvent(map, this.element.id)
         }
     }
 

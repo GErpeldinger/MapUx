@@ -13,7 +13,7 @@ export default class extends Controller {
 
         if (map) {
             this.addMarkerTo(map)
-            functions.throwMapEvent(map)
+            functions.throwMapEvent(map, this.element.id)
         }
     }
 
