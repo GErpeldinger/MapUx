@@ -60,11 +60,8 @@ export default class extends Controller {
                             shouldFocus: false,
                         });
                     });
-
-
                 }
             })
         }
     }
-
 }

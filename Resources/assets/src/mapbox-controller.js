@@ -21,10 +21,10 @@ export default class extends Controller {
 
         return new mapboxgl.Map(
             {
-                container: this.element,                                // container
-                style: background.url,                                  // style URL
-                center: [view.center.longitude, view.center.latitude],  // starting position [lng, lat]
-                zoom: view.zoom                                         // starting zoom
+                container: this.element,
+                style: background.url,
+                center: [view.center.longitude, view.center.latitude],
+                zoom: view.zoom
             }
         );
     }
@@ -46,9 +46,8 @@ export default class extends Controller {
     }
 
     addPopupToMarker(leafletMarker, marker) {
-        const popup = new mapboxgl.Popup(marker.popup.options).setText(
+        leafletMarker.setPopup(new mapboxgl.Popup(marker.popup.options).setText(
             marker.popup.content
-        );
-        leafletMarker.setPopup(popup)
+        ))
     }
 }

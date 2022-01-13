@@ -135,14 +135,12 @@ export default class extends Controller {
     }
 
     createOverlay(container, marker) {
-        const overlay = new ol.Overlay({
+        return new ol.Overlay({
             element: container,
             autoPan: true,
             autoPanAnimation: {
                 duration: marker.popup.options.duration ?? 250
             }
         });
-
-        return overlay
     }
 }
