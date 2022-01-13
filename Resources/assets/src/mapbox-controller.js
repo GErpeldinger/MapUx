@@ -37,7 +37,18 @@ export default class extends Controller {
                 const mapboxMarker = new mapboxgl.Marker()
                     .setLngLat([marker.position.longitude, marker.position.latitude])
                     .addTo(map);
+
+                if(marker.popup) {
+                    this.addPopupToMarker(mapboxMarker, marker)
+                }
             })
         }
+    }
+
+    addPopupToMarker(leafletMarker, marker) {
+        const popup = new mapboxgl.Popup(marker.popup.options).setText(
+            marker.popup.content
+        );
+        leafletMarker.setPopup(popup)
     }
 }

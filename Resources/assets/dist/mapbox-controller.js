@@ -73,12 +73,24 @@ var _default = /*#__PURE__*/function (_Controller) {
   }, {
     key: "addMarkersTo",
     value: function addMarkersTo(map) {
+      var _this = this;
+
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         markersList.forEach(function (marker) {
           var mapboxMarker = new _mapboxGl["default"].Marker().setLngLat([marker.position.longitude, marker.position.latitude]).addTo(map);
+
+          if (marker.popup) {
+            _this.addPopupToMarker(mapboxMarker, marker);
+          }
         });
       }
+    }
+  }, {
+    key: "addPopupToMarker",
+    value: function addPopupToMarker(leafletMarker, marker) {
+      var popup = new _mapboxGl["default"].Popup(marker.popup.options).setText(marker.popup.content);
+      leafletMarker.setPopup(popup);
     }
   }]);
   return _default;
