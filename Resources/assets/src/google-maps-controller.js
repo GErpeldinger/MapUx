@@ -47,7 +47,24 @@ export default class extends Controller {
                     },
                     map: map,
                 });
+
+                if(marker.popup) {
+                    const infowindow = new google.maps.InfoWindow({
+                        content: marker.popup.content,
+                    });
+
+                    googleMarker.addListener("click", () => {
+                        infowindow.open({
+                            anchor: googleMarker,
+                            map,
+                            shouldFocus: false,
+                        });
+                    });
+
+
+                }
             })
         }
     }
+
 }
