@@ -56,10 +56,17 @@ export default class extends Controller {
 
             const markers = []
             markersList.forEach(marker => {
+
+                const olMarker = new geom.Point(
+                    proj.fromLonLat([marker.position.longitude, marker.position.latitude])
+                )
+
+                if(marker.popup) {
+                    this.addPopup(map, marker)
+                }
+
                 markers.push(new ol.Feature({
-                    geometry: new geom.Point(
-                        proj.fromLonLat([marker.position.longitude, marker.position.latitude])
-                    )
+                    geometry: olMarker
                 }));
             })
 
@@ -71,5 +78,71 @@ export default class extends Controller {
 
             map.addLayer(markersLayer)
         }
+    }
+
+
+    createPopup(popupId) {
+
+        const popup = document.createElement('div')
+        popup.id = popupId
+        popup.classList.add(popupId)
+
+        const popupContent = document.createElement('div')
+        popupContent.id = popupId + '-content'
+
+        const closeLink = document.createElement('a')
+        closeLink.href = '#'
+        closeLink.id = popupId + '-closer'
+        closeLink.classList.add(popupId + '-closer')
+
+        popup.appendChild(closeLink)
+        popup.appendChild(popupContent)
+
+        return popup
+
+    }
+
+    addPopup(map, marker) {
+        const popupId = 'ol-popup'
+
+        if(!document.getElementById(popupId)) {
+            document.body.appendChild(this.createPopup(popupId))
+        }
+        const container = document.getElementById(popupId);
+        const content   = document.getElementById(popupId + '-content');
+        const closer    = document.getElementById(popupId + '-closer');
+
+        const overlay = this.createOverlay(container, marker)
+
+        map.addOverlay(overlay);
+
+        closer.onclick = () => {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
+        map.on('singleclick', function (event) {
+            if (map.hasFeatureAtPixel(event.pixel) === true) {
+                const coordinate = event.coordinate;
+                content.innerHTML = marker.popup.content;
+                overlay.setPosition(coordinate);
+            } else {
+                overlay.setPosition(undefined);
+                closer.blur();
+            }
+        });
+    }
+
+    createOverlay(container, marker) {
+        const overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: marker.popup.options.duration ?? 250
+            }
+        });
+
+        return overlay
     }
 }

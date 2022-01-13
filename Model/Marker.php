@@ -17,6 +17,8 @@ class Marker implements MarkerInterface
 
     /** @var TooltipInterface|null */
     private ?TooltipInterface $tooltip = null;
+
+    /** @var TooltipInterface|null  */
     private ?TooltipInterface $popup = null;
 
     /**
