@@ -110,10 +110,14 @@ class Map implements MapInterface
 
         foreach ($this->markers as $marker) {
             $tooltip = $marker->getTooltip();
+            $popup   = $marker->getPopup();
             $markersPositions[] = [
                 'position' => $marker->getPosition(),
                 'tooltip'  => $tooltip
                     ? ['content' => $tooltip->getContent(), 'options' => $tooltip->getOptions()]
+                    : null,
+                'popup'  => $popup
+                    ? ['content' => $popup->getContent(), 'options' => $popup->getOptions()]
                     : null
             ];
         }
