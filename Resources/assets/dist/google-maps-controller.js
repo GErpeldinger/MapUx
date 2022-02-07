@@ -118,6 +118,19 @@ var _default = /*#__PURE__*/function (_Controller) {
             },
             map: map
           });
+
+          if (marker.popup) {
+            var infowindow = new google.maps.InfoWindow({
+              content: marker.popup.content
+            });
+            googleMarker.addListener("click", function () {
+              infowindow.open({
+                anchor: googleMarker,
+                map: map,
+                shouldFocus: false
+              });
+            });
+          }
         });
       }
     }

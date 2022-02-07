@@ -99,12 +99,20 @@ var _default = /*#__PURE__*/function (_Controller) {
   }, {
     key: "addMarkerTo",
     value: function addMarkerTo(map) {
+      var _this = this;
+
       if (this.element.dataset.markers) {
         var markersList = JSON.parse(this.element.dataset.markers);
         var markers = [];
         markersList.forEach(function (marker) {
+          var olMarker = new geom.Point(proj.fromLonLat([marker.position.longitude, marker.position.latitude]));
+
+          if (marker.popup) {
+            _this.addPopup(map, marker);
+          }
+
           markers.push(new ol.Feature({
-            geometry: new geom.Point(proj.fromLonLat([marker.position.longitude, marker.position.latitude]))
+            geometry: olMarker
           }));
         });
         var markersLayer = new layer.Vector({
@@ -114,6 +122,68 @@ var _default = /*#__PURE__*/function (_Controller) {
         });
         map.addLayer(markersLayer);
       }
+    }
+  }, {
+    key: "createPopup",
+    value: function createPopup(popupId) {
+      var popup = document.createElement('div');
+      popup.id = popupId;
+      popup.classList.add(popupId);
+      var popupContent = document.createElement('div');
+      popupContent.id = popupId + '-content';
+      var closeLink = document.createElement('a');
+      closeLink.href = '#';
+      closeLink.id = popupId + '-closer';
+      closeLink.classList.add(popupId + '-closer');
+      popup.appendChild(closeLink);
+      popup.appendChild(popupContent);
+      return popup;
+    }
+  }, {
+    key: "addPopup",
+    value: function addPopup(map, marker) {
+      var popupId = 'ol-popup';
+
+      if (!document.getElementById(popupId)) {
+        document.body.appendChild(this.createPopup(popupId));
+      }
+
+      var container = document.getElementById(popupId);
+      var content = document.getElementById(popupId + '-content');
+      var closer = document.getElementById(popupId + '-closer');
+      var overlay = this.createOverlay(container, marker);
+      map.addOverlay(overlay);
+
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+
+      map.on('singleclick', function (event) {
+        if (map.hasFeatureAtPixel(event.pixel) === true) {
+          var coordinate = event.coordinate;
+          content.innerHTML = marker.popup.content;
+          overlay.setPosition(coordinate);
+        } else {
+          overlay.setPosition(undefined);
+          closer.blur();
+        }
+      });
+    }
+  }, {
+    key: "createOverlay",
+    value: function createOverlay(container, marker) {
+      var _marker$popup$options;
+
+      var overlay = new ol.Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: (_marker$popup$options = marker.popup.options.duration) !== null && _marker$popup$options !== void 0 ? _marker$popup$options : 250
+        }
+      });
+      return overlay;
     }
   }]);
   return _default;

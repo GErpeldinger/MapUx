@@ -37,12 +37,20 @@ export default class extends Controller {
                 if(marker.tooltip) {
                     this.addTooltipToMarker(leafletMarker, marker)
                 }
+
+                if(marker.popup) {
+                    this.addPopupToMarker(leafletMarker, marker)
+                }
             })
         }
     }
 
     addTooltipToMarker(leafletMarker, marker) {
         leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options)
+    }
+
+    addPopupToMarker(leafletMarker, marker) {
+        leafletMarker.bindPopup(marker.popup.content, marker.popup.options)
     }
 
     /**

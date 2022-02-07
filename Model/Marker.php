@@ -18,6 +18,9 @@ class Marker implements MarkerInterface
     /** @var TooltipInterface|null */
     private ?TooltipInterface $tooltip = null;
 
+    /** @var TooltipInterface|null  */
+    private ?TooltipInterface $popup = null;
+
     /**
      * @inheritDoc
      */
@@ -84,5 +87,22 @@ class Marker implements MarkerInterface
     public function setTooltip(?TooltipInterface $tooltip): void
     {
         $this->tooltip = $tooltip;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getPopup(): ?TooltipInterface
+    {
+        return $this->popup;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setPopup(?TooltipInterface $popup): void
+    {
+        $this->popup = $popup;
     }
 }

@@ -82,6 +82,10 @@ var _default = /*#__PURE__*/function (_Controller) {
           if (marker.tooltip) {
             _this.addTooltipToMarker(leafletMarker, marker);
           }
+
+          if (marker.popup) {
+            _this.addPopupToMarker(leafletMarker, marker);
+          }
         });
       }
     }
@@ -89,6 +93,11 @@ var _default = /*#__PURE__*/function (_Controller) {
     key: "addTooltipToMarker",
     value: function addTooltipToMarker(leafletMarker, marker) {
       leafletMarker.bindTooltip(marker.tooltip.content, marker.tooltip.options);
+    }
+  }, {
+    key: "addPopupToMarker",
+    value: function addPopupToMarker(leafletMarker, marker) {
+      leafletMarker.bindPopup(marker.popup.content, marker.popup.options);
     }
     /**
      * for some obscure reason, when we use Webpack, we have to redefine the icons :/
