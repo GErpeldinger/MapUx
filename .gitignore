@@ -5,8 +5,3 @@ composer.lock
 /Resources/assets/yarn.lock
 /Resources/assets/yarn-error.log
 ###< Project ###
-
-###> Others ###
-/.idea/
-.DS_Store
-###< Others ###

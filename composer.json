@@ -1,7 +1,7 @@
 {
     "name": "gerpeldinger/mapux",
-    "description": "MapUx is a bundle for symfony, its goal is to help you to add maps easily in your project.",
     "type": "symfony-bundle",
+    "description": "MapUx is a bundle for symfony, its goal is to help you to add maps easily in your project.",
     "keywords": [
         "symfony-ux"
     ],
@@ -18,18 +18,24 @@
     ],
     "require": {
         "php": ">=7.4",
-        "symfony/config": "^v4.4.27|^5.0",
-        "symfony/dependency-injection": "^4.4.27|^5.0",
-        "symfony/http-kernel": "^4.4.27|^5.0"
+        "symfony/config": "^v4.4.27|^5.0|^6.0",
+        "symfony/dependency-injection": "^4.4.27|^5.0|^6.0",
+        "symfony/http-kernel": "^4.4.27|^5.0|^6.0"
     },
     "require-dev": {
-        "symfony/framework-bundle": "^4.4.27|^5.0",
-        "symfony/twig-bundle": "^4.4.27|^5.0",
-        "symfony/var-dumper": "^4.4.27|^5.0"
+        "symfony/framework-bundle": "^4.4.27|^5.0|^6.0",
+        "symfony/twig-bundle": "^4.4.27|^5.0|^6.0",
+        "symfony/var-dumper": "^4.4.27|^5.0|^6.0",
+        "symfony/webpack-encore-bundle": "^1.11"
     },
     "autoload": {
         "psr-4": {
             "MapUx\\": ""
         }
-    }
+    },
+    "conflict": {
+        "symfony/flex": "<1.13",
+        "symfony/webpack-encore-bundle": "<1.11"
+    },
+    "minimum-stability": "dev"
 }
