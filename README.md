@@ -10,10 +10,11 @@ It adds all what you need for maps, markers, popups ...
 > Please note that this version of mapUX is still in development.  
 > We are building this component with love and care but some errors can be found.  
 > Please use github issues to report any problem encountered.  
-> Have fun.  
+> Have fun.
 
 ## Requirements
+
 > PHP >= 7.2  
 > Composer  
 > Symfony >= 4.4  
-> Webpack Encore  
+> Webpack Encore
