@@ -96,12 +96,12 @@ class openLayersController extends Controller {
         return popup;
     }
     createOverlay(container, marker) {
-        var _a;
+        var _a, _b;
         return new ol.Overlay({
             element: container,
             autoPan: true,
             autoPanAnimation: {
-                duration: (_a = marker.popup.options.duration) !== null && _a !== void 0 ? _a : 250
+                duration: (_b = (_a = marker.popup.options) === null || _a === void 0 ? void 0 : _a.duration) !== null && _b !== void 0 ? _b : 250
             }
         });
     }

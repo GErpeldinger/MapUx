@@ -13,7 +13,7 @@ type Marker = {
     };
     popup: {
         content: string;
-        options: {
+        options?: {
             duration?: number;
         }
     }
@@ -134,7 +134,6 @@ export default class extends Controller {
         popup.appendChild(popupContent)
 
         return popup
-
     }
 
     createOverlay(container: HTMLElement, marker: Marker) {
@@ -142,7 +141,7 @@ export default class extends Controller {
             element: container,
             autoPan: true,
             autoPanAnimation: {
-                duration: marker.popup.options.duration ?? 250
+                duration: marker.popup.options?.duration ?? 250
             }
         });
     }
