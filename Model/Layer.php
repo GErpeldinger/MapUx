@@ -7,7 +7,7 @@ namespace MapUx\Model;
 /**
  * @experimental
  */
-class Layer implements LayerInterface
+final class Layer implements LayerInterface
 {
     /** @var string|null */
     private ?string $url = null;
